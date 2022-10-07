@@ -1,9 +1,12 @@
 clc
 clear
 
+%% CODE THAT ENABLES COMPARISONS BETWEEN NACA AIRFOILS GIVEN YY FORM XXYY NOM.
+
 %fix() integer part of division.
 %rem() r
 %p is not given 
+
 text = "Ultimos dos digitos del perfil NACA:  ";
 t = input(text);
 c = 1;
@@ -50,7 +53,8 @@ i=i+1;
     p = 0.05;
 end
 
-% 
+
+%% PLOTTING
 figure
 plot(p_vec(1,:), al_0(1,:), 'r');
 hold on
