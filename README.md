@@ -13,7 +13,14 @@ This part of the repo is divided in three main blocks:
 
 ## Airfoil design
 
+The airfoil analysis codes are separated depending on its functionalities:
 
+- naca comparisons: basic analysis comparing 4-digit NACA airfoils with the same two last characters (XXYY changing XX). 
+- simple airfoil: given a 4-digit NACA airfoil a basic analysis es returned. 
+- flap extension: same analysis type as the simple airfoil but with flap configuration. 
+
+Hinge related scripts consider only the flap surface to calculate its contributions to lift and pitching moment. 
+Finally there's also code to calculate flap effectiveness having previous experimental data.
 
 ## Airplane configuration
 
@@ -38,5 +45,5 @@ Both codes for analysis at cruising altitudes and sea level are available.
 ## Rotary elements
 
 Scripts for High Pressure Compressor (HPC) and High Pressure Turbine (HPT) analysis are provided. 
-Regarding the compressor polytropic efficiencies as well as temperature increases are calculated. Then rotor blade angles are calculated. The mean radius is calculated for the turbine and the difference between the inlet and outlet Mach in different stages. 
+Regarding the compressor polytropic efficiencies as well as temperature increases are calculated. Then rotor blade angles are calculated. The mean radius is calculated for the turbine. So is the difference between the inlet and outlet Mach in different stages. 
 
