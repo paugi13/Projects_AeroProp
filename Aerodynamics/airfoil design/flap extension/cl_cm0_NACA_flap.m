@@ -16,7 +16,9 @@ incr_alpha = 0.01;
 n_alpha = -5:incr_alpha:10;
 alpha =-5.0;                                      %Angle of attack.
 u_inf = 1;                                      %Freestream.
-dens = 1;                                       %Density.
+dens = 1; %Density.
+
+% Flap parameters.
 xh = 0.8;
 def = 20;
 
