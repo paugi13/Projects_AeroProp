@@ -2,6 +2,7 @@
 
 PR (220028) G06. Two separated folders for propulsion and aerodynamic calculations. Here you have how this repository works, what the most important scripts do and where to find them.
 Every subdepartment has some notes folders where the most important theory knowledge serves as documentation. 
+Airfoil and wing data obtained from using this repo could be combined with XFLR5 calculations. 
 
 # Aerodynamics
 
