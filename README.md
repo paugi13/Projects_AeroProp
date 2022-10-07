@@ -18,7 +18,7 @@ The airfoil analysis codes are separated depending on its functionalities:
 
 - naca comparisons: basic analysis comparing 4-digit NACA airfoils with the same two last characters (XXYY changing XX). 
 - simple airfoil: given a 4-digit NACA airfoil a basic analysis es returned. 
-- flap extension: same analysis type as the simple airfoil but with flap configuration. 
+- flap extension: same analysis type as the simple airfoil but adding flap parameters. 
 
 Hinge related scripts consider only the flap surface to calculate its contributions to lift and pitching moment. 
 Finally there's also code to calculate flap effectiveness having previous experimental data.
