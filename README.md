@@ -28,7 +28,9 @@ Finally there's also code to calculate flap effectiveness having previous experi
 
 ## Wing analysis
 
+LLWING folder contains the necessary subroutines to have functioning wing analysis software and it should not be modified. AP1_AP2 and AP3 are the main scripts that return detailed wing and wing-body analysis. Code's detailed documentation should be done by looking at the Homework2 questions. 
 
+AP1_AP2 contain the first two parts of the project including fuselage and wing analysis, while AP3 contains the calculations related to the last part in which sweep angle and washout are introduced. 
 
 # Propulsion
 
