@@ -5,7 +5,7 @@
 % e.ortega@upc.edu
 % -------------------------------------------------------------------------     
 
-clc; clear all; close all;
+clc; clear; close all;
 format long;
 addpath(genpath('LLWING'));
 % -------------------------------------------------------------------------

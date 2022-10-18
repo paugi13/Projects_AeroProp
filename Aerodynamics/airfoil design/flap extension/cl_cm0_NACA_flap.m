@@ -1,10 +1,9 @@
 clc;
 clear; close all;
+format long;
 
 %% CODE FOR FLAP ANALYSIS 
 
-%fix() integer part of division.
-%rem() r
 text = "Perfil NACA a analizar:  ";
 naca = input(text);
 
@@ -18,20 +17,24 @@ alpha =-5.0;                                      %Angle of attack.
 u_inf = 1;                                      %Freestream.
 dens = 1; %Density.
 
-% Flap parameters.
-xh = 0.8;
-def = 20;
-
-        %N panels require N + 1 points
 leng = (10-alpha)/incr_alpha;
 cl_dist = zeros(1, leng);
 cm_dist = zeros(1, leng);
 cm_0 = zeros(1, leng);
 
+
+%% Flap parameters and definition of number of panels 
+xh = 0.8;   % hinge position out of 1. 
+def = 20;   % flap deflection
+
+% Number of panels. Depending on this number the results are more or less
+% precise.
+        %N panels require N + 1 points
 pan = 150;
 point= pan+1;
 i=1;
 
+%% Airfoil with flap building and analysis. 
 while alpha<=10
     [cl_dist(1, i), cm_dist(1, i), pos] = cl_cm0_2408_flap_function(point, pan, f, p, t, alpha, xh, def);
     cm_0(1, i) = cl_dist(1, i)*0.25 + cm_dist(1, i);
@@ -70,6 +73,11 @@ while i<=pan
     i = i+1;
 end
 
+%% Postprocess
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+
 figure
 quiver(cp(:,1), cp(:,2), vec_norm(:,1), vec_norm(:,2));
 hold on
@@ -77,18 +85,26 @@ plot(pos(:,1),pos(:,2))
 axis equal
 xlabel('x/c');
 ylabel('z');
-title('NACA 2408 E = 0.2 y \eta = 20º');
+title("\textbf{Plot $y$ vs. $x$ -- Example}");
 hold off
 
-
+% alpha - Cl
 figure
-plot(n_alpha, cl_dist(1,:));
 hold on
-plot(-5:1:10, zeros(16,1), 'black');
+title("\textbf{C_l vs \alpha");
+plot(n_alpha, cl_dist(1,:), 'b', 'LineWidth', 1);
+xlabel('$\alpha$ $\left[\mathrm{^\circ}\right]$')
+ylabel('$C_l$ $\left[\mathrm{-}\right]$')
+grid on
 hold off
 
+%alpha - Cm0
 figure
-plot(n_alpha, cm_0(1,:));
 hold on
-plot(-5:1:10, zeros(16,1), 'black');
+title("\textbf{C_{m_0} vs \alpha");
+plot(n_alpha, cm_0(1,:), 'b', 'LineWidth', 1);
+xlabel('$\alpha$ $\left[\mathrm{^\circ}\right]$')
+ylabel('$C_{m_0}$ $\left[\mathrm{-}\right]$')
+grid on
+axis equal
 hold off

@@ -1,7 +1,7 @@
-clc
+clc;
+clear; close all;
 
-%fix() integer part of division.
-%rem() r
+
 text = "Perfil NACA a analizar:  ";
 naca = input(text);
 
@@ -15,17 +15,17 @@ alpha =-5;                                      %Angle of attack.
 u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
-% pan = 150;        %N panels require N + 1 points
-% 
 leng = (10-alpha)/incr_alpha;
 cl_dist = zeros(1, leng);
 cm_dist = zeros(1, leng);
 cm_0 = zeros(1, leng);
 
+%% Flap parameters and definition of number of panels 
 pan = 200;
 point = pan+1;
 i=1;
 
+%% Airfoil analysis
 while alpha<=10
     point=pan+1;
     [cl_dist(1, i), cm_dist(1, i)] = cl_cm0_2408_alpha_function(point, pan, f, p, t, alpha, 0, 0);
@@ -38,21 +38,28 @@ while alpha<=10
     i=i+1;
 end
 
+
+%% Postprocess
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+
 figure
-plot(n_alpha, cl_dist(1,:), 'b');
 hold on
-xlabel('\alpha [º]', 'Fontsize', 14)
-ylabel('Cl', 'Fontsize', 14);
-plot(-5:1:10, zeros(16,1), 'black');
+title("\textbf{C_l vs \alpha");
+plot(n_alpha, cl_dist(1,:), 'b', 'LineWidth', 1);
+xlabel('$\alpha$ $\left[\mathrm{^\circ}\right]$')
+ylabel('$C_l$ $\left[\mathrm{-}\right]$')
 title('Cl  vs \alpha')
+grid on
 hold off
 
 figure
-
-plot(n_alpha, cm_0(1,:), 'b');
 hold on
+title("\textbf{C_l vs \alpha");
+plot(n_alpha, cm_0(1,:), 'b');
 plot(-5:1:10, zeros(16,1), 'black');
-xlabel('\alpha [º]', 'Fontsize', 14)
-ylabel('C_{m0}', 'Fontsize', 14);
-title('C_{m0}  vs \alpha');
+xlabel('$\alpha$ $\left[\mathrm{^\circ}\right]$')
+ylabel('$C_{m_0}$ $\left[\mathrm{-}\right]$')
+grid on
 hold off
