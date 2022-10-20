@@ -1,23 +1,7 @@
-function [cl, cm_le] = cl_cm0_NACA_alpha_function(point, pan, f, p, t, alpha, xh, def)
+function [cl, cm_le] = cl_cm0_NACA_alpha_function(point, pan, alpha, pos, xh, def)
                                 
-u_inf = 1;                                     
-dens = 1;                                       
+u_inf = 1;                                                                           
 c = 1;
-
-set(groot,'defaultAxesTickLabelInterpreter','latex');  
-set(groot,'defaulttextinterpreter','latex');
-set(groot,'defaultLegendInterpreter','latex');
-
-%% Define new camber line for supercrital airfoils
-coord = table2array(readtable('NASASC(2)0414.csv'));
-point = size(coord,1)/2;
-pan = point-1;
-pos = zeros(point, 2);
-
-for i=1:size(coord,1)/2
-pos(i,1) = coord(i,1);
-pos(i,2) = (coord(i,2)+coord(i+103, 2))*0.5;
-end
 
 if def ~= 0  
     
@@ -45,15 +29,7 @@ if def ~= 0
     end
     
 end
-%% Plot airfoil with camber line
 
-figure
-hold on
-title("\textbf{NASASC(2)0414}");
-plot(pos(:,1), pos(:,2), 'r', 'LineWidth', 1);
-plot(coord(1:point, 1), coord(1:point, 2), 'b', 'LineWidth', 1);
-plot(coord(point+1:point*2, 1), coord(point+1:point*2, 2), 'b', 'LineWidth', 1);
-hold off
 
 
 %% Normal vector calculus
@@ -84,15 +60,6 @@ for i = 1:pan
     cp(i, :) = pos(i, :) + 0.75*vec_tan(i, :);
     vortex_point(i, :) = pos(i, :) + 0.25*vec_tan(i, :);
 end
-
-%Check points
-% figure
-% plot(pos(:,1), pos(:,2));
-% axis equal
-% hold on 
-% scatter(cp(:,1), cp(:,2));
-% scatter(vortex_point(:,1), vortex_point(:,2))
-% hold off
 
 
 %% Vortex equation system
@@ -142,6 +109,4 @@ for i = 1:pan
 end
 
 cm_le = -2/(u_inf*c^2)*sum*cosd(alpha);
-
-
 end
