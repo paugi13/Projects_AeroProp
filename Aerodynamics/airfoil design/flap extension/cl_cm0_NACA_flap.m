@@ -4,7 +4,7 @@ format long;
 
 %% CODE FOR FLAP ANALYSIS 
 
-text = "Perfil NACA a analizar:  ";
+text = "Perfil NACA a analizar: ";
 naca = input(text);
 
 c = 1;

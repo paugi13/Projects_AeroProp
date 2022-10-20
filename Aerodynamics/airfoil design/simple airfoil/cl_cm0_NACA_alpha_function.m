@@ -1,104 +1,61 @@
-function [cl, cm_le] = cl_cm0_2408_alpha_function(point, pan, f, p, t, alpha, xh, def)
-
-
-%--------------------------------------------------
-%                   THIS CODE ISN'T 
-%                    USED ANYMORE
-%       AS IT'S THE SAME AS NACA_CALCULUS_AUTOM.M
-%--------------------------------------------------
-
-
-
-                                 %Angle of attack.
-u_inf = 1;                                      %Freestream.
-dens = 1;                                       %Density.
+function [cl, cm_le] = cl_cm0_NACA_alpha_function(point, pan, f, p, t, alpha, xh, def)
+                                
+u_inf = 1;                                     
+dens = 1;                                       
 c = 1;
 
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+
+%% Define new camber line for supercrital airfoils
+coord = table2array(readtable('NASASC(2)0414.csv'));
+point = size(coord,1)/2;
+pan = point-1;
 pos = zeros(point, 2);
-for i = 1:point
-    pos(i, 1) = 1/2*(1-(cos((i-1)/(point-1)*pi)));
-end
 
-for i = 1:point
-   
-    if pos(i, 1)<=p
-        pos(i,2) = f/(p^2)*(2*p*pos(i, 1)-pos(i, 1)^2);
-        
-    else
-        pos(i,2) = f/(1-p)^2*(1-2*p+2*p*pos(i, 1)-pos(i, 1)^2);
-    end
-end
-
-if p==0 && f==0
-    pos(:,2)=0;
+for i=1:size(coord,1)/2
+pos(i,1) = coord(i,1);
+pos(i,2) = (coord(i,2)+coord(i+103, 2))*0.5;
 end
 
 if def ~= 0  
-    %% Find xh approx
+    
 
-d_min = 1000;
-for i = 1:point
-    if abs(pos(i,1)-xh)<d_min
-        d_min = abs(pos(i,1)-xh);
-        aux = i;
+    d_min = 1000;
+    for i = 1:point
+        if abs(pos(i,1)-xh)<d_min
+            d_min = abs(pos(i,1)-xh);
+            aux = i;
+        end
     end
-end
 
+    %% Rotate points behind xh
 
-%% Rotate points behind xh
-
-coord_rel = zeros(2,1);
-for i = 1:point
-    if pos(i, 1)>pos(aux, 1)
-        coord_rel(1, 1) = pos(i, 1) - pos(aux, 1);
-        coord_rel(2, 1) = pos(i, 2) - pos(aux, 2);
-        rot_mat = [cosd(-def) -sind(-def); sind(-def) cosd(-def)];
-        new_coord_rel = rot_mat*coord_rel;
-        pos(i, 1) = pos(aux, 1) + new_coord_rel(1);
-        pos(i, 2) = pos(aux, 2) + new_coord_rel(2);
+    coord_rel = zeros(2,1);
+    for i = 1:point
+        if pos(i, 1)>pos(aux, 1)
+            coord_rel(1, 1) = pos(i, 1) - pos(aux, 1);
+            coord_rel(2, 1) = pos(i, 2) - pos(aux, 2);
+            rot_mat = [cosd(-def) -sind(-def); sind(-def) cosd(-def)];
+            new_coord_rel = rot_mat*coord_rel;
+            pos(i, 1) = pos(aux, 1) + new_coord_rel(1);
+            pos(i, 2) = pos(aux, 2) + new_coord_rel(2);
+        end
     end
-end
     
 end
-%% Define thickness
+%% Plot airfoil with camber line
 
-
-
-thicc = zeros(point, 2);
-for i = 1:point
-    thicc(i, 1) = pos(i, 2) + t/0.2*(0.2969*sqrt(pos(i, 1))-0.126*pos(i, 1)-0.3516*pos(i, 1)^2+0.2843*pos(i, 1)^3-0.1015*pos(i, 1)^4);
-    thicc(i, 2) = pos(i, 2) -t/0.2*(0.2969*sqrt(pos(i, 1))-0.126*pos(i, 1)-0.3516*pos(i, 1)^2+0.2843*pos(i, 1)^3-0.1015*pos(i, 1)^4);
-end
-
-% t/0.2*(0.2969*sqrt(x)-0.126*x-0.3516*x^2+0.2843*x^3-0.1015*x^4)
-%Plot camber line and thickness
-if pan == 150 || pan == 4 
-    figure
-plot(pos(:,1), pos(:,2));
-axis equal
+figure
 hold on
-plot(pos(:,1), thicc(:,1), 'b');
-plot(pos(:,1), thicc(:,2), 'b');
-plot(0:0.1:1, zeros(1,11), 'black');
-xlabel('x/c');
-ylabel('z');
-title(' N = ' + string(pan));
+title("\textbf{NASASC(2)0414}");
+plot(pos(:,1), pos(:,2), 'r', 'LineWidth', 1);
+plot(coord(1:point, 1), coord(1:point, 2), 'b', 'LineWidth', 1);
+plot(coord(point+1:point*2, 1), coord(point+1:point*2, 2), 'b', 'LineWidth', 1);
 hold off
-end
 
-if pan == 150 || pan == 4 
-    figure
-plot(pos(:,1), pos(:,2));
-axis equal
-hold on
-plot(pos(:,1), thicc(:,1), 'b');
-plot(pos(:,1), thicc(:,2), 'b');
-plot(0:0.1:1, zeros(1,11), 'black');
-xlabel('x/c');
-ylabel('z');
-title(' N = ' + string(pan));
-hold off
-end
+
 %% Normal vector calculus
 %Positive vector of the panel is also calculated
 n = [0,0,1];

@@ -6,14 +6,18 @@ c = 1;
 
 i=1;
 pos = zeros(point, 2);
+
+%% Camber line definition
+% vector type -> pos(point, 2)
+% x distribution using different distributions
 while i<=point
     pos(i, 1) = 1/2*(1-(cos((i-1)/(point-1)*pi)));     %Cosine dist.
 %     pos(i,1) = c*(i-1)/(point-1);                       %Linear dist.
     i=i+1;
 end
 
+% y camber line values following 4-digit function method 
 i=1;
-
 while i<=point
    
     if pos(i, 1)<=p
@@ -34,7 +38,6 @@ end
 % end
 
 %% Find xh approx
-
 i = 1;
 d_min = 1000;
 while i<=point
@@ -47,7 +50,6 @@ end
 
 
 %% Rotate points behind xh
-
 i = 1;
 coord_rel = zeros(2,1);
 while i<=point

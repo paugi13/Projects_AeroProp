@@ -28,7 +28,7 @@ i=1;
 %% Airfoil analysis
 while alpha<=10
     point=pan+1;
-    [cl_dist(1, i), cm_dist(1, i)] = cl_cm0_2408_alpha_function(point, pan, f, p, t, alpha, 0, 0);
+    [cl_dist(1, i), cm_dist(1, i)] = cl_cm0_NACA_alpha_function(point, pan, f, p, t, alpha, 0, 0);
     cm_0(1, i) = cl_dist(1, i)*0.25 + cm_dist(1, i);
     if int32(alpha) == 5
        m = (cl_dist(1,i)-cl_dist(1,(i-1)))/(alpha-(alpha-incr_alpha));
