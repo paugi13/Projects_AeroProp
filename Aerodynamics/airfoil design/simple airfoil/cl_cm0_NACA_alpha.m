@@ -1,5 +1,6 @@
 clc;
 clear; close all;
+addpath(genpath('airfoil design'));
 
 incr_alpha = 0.01;
 n_alpha = -5:incr_alpha:20;
