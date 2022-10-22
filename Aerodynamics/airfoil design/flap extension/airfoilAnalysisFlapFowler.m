@@ -10,7 +10,7 @@ u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
 % According to NASA's data with GA(W)-1
-alphaStall = 11.5;
+alphaStall = 10.5;
 
 %% Define new camber line for supercrital airfoils
 % GA(W)-1
@@ -69,7 +69,8 @@ set(groot,'defaulttextinterpreter','latex');
 set(groot,'defaultLegendInterpreter','latex');
 
 %% Plot airfoil with camber line
-nClStall = 1651;
+nClStall = 1551;
+ClStallData = 3.625;
 
 figure
 hold on
@@ -97,6 +98,7 @@ figure
 hold on
 title("\textbf{$C_l$ vs $\alpha$}");
 scatter(alphaStall, cl_dist(nClStall), [], [1 0 0], 'filled');
+scatter(alphaStall, ClStallData, [], [0 1 0], 'filled');
 plot(n_alpha, cl_dist(1,:), 'b', 'LineWidth', 1);
 % plot([alphaStall alphaStall], [0 cl_dist(nClStall)], '--', 'color', 'r');
 % plot([0 alphaStall], [cl_dist(nClStall) cl_dist(nClStall)], '--', 'color', 'r');
@@ -104,7 +106,7 @@ xlabel('$\alpha$ $\left[\mathrm{^\circ}\right]$')
 ylabel('$C_l$ $\left[\mathrm{-}\right]$')
 grid on
 grid minor
-legend('Stall point', 'location', 'northwest');
+legend('Calculated stall point', 'Data stall point' ,'location', 'northwest');
 hold off
 
 figure
