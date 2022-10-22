@@ -1,6 +1,7 @@
 clc;
 clear; close all;
-addpath(genpath('airfoil design'));
+% addpath(genpath('airfoil design'));
+addpath(genpath(fileparts(mfilename('fullpath'))));
 
 incr_alpha = 0.01;
 n_alpha = -5:incr_alpha:20;
@@ -16,14 +17,12 @@ pos = zeros(point, 2);
 
 for i=1:size(coord,1)/2
 pos(i,1) = coord(i,1);
-pos(i,2) = (coord(i,2)+coord(i+103, 2))*0.5;
+pos(i,2) = (coord(i,2)+coord(i+point, 2))*0.5;
 end
 
 cl_dist = zeros(1, length(n_alpha));
 cm_dist = zeros(1, length(n_alpha));
 cm_0 = zeros(1, length(n_alpha));
-
-i=1;
 
 %% Airfoil analysis
 for i=1:length(n_alpha)
@@ -35,7 +34,6 @@ for i=1:length(n_alpha)
        al_0 = -cl_dist(1,(i-1))/m + (alpha-incr_alpha);   
     end
     alpha = alpha+incr_alpha;
-    i=i+1;
 end
 
 
@@ -70,10 +68,22 @@ hold off
 
 figure
 hold on
-title("\textbf{$C_l$ vs $\alpha$}");
+title("\textbf{$C_{m_0}$ vs $\alpha$}");
 plot(n_alpha, cm_0(1,:), 'b' , 'LineWidth', 1);
 xlabel('$\alpha$ $\left[\mathrm{^\circ}\right]$')
 ylabel('$C_{m_0}$ $\left[\mathrm{-}\right]$')
 grid on
 grid minor
+axis equal
+hold off
+
+figure
+hold on
+title("\textbf{$C_l$ vs $\alpha$}");
+plot(n_alpha, cm_dist(1,:), 'b' , 'LineWidth', 1);
+xlabel('$\alpha$ $\left[\mathrm{^\circ}\right]$')
+ylabel('$C_{m}$ $\left[\mathrm{-}\right]$')
+grid on
+grid minor
+axis equal
 hold off

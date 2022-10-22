@@ -1,6 +1,7 @@
 clc;
 clear; close all;
-addpath(genpath('airfoil design'));
+% addpath(genpath('C:\Users\Usuari\Desktop\Q7\Projectes\Aerodinàmica - Propulsió\Projects_AeroProp\Aerodynamics\airfoil design'));
+addpath(genpath(fileparts(mfilename('fullpath'))));
 
 incr_alpha = 0.01;
 n_alpha = -5:incr_alpha:20;
@@ -8,9 +9,11 @@ alpha =-5;                                      %Angle of attack.
 u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
+% According to NASA's data with GA(W)-1
 alphaStall = 11.5;
 
 %% Define new camber line for supercrital airfoils
+% GA(W)-1
 coord = table2array(readtable('NASASC(2)0414.csv'));
 coord_flap = table2array(readtable('fowler_coordinates.csv'));
 point = size(coord,1)/2;
