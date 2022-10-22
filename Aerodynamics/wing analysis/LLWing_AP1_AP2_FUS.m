@@ -7,39 +7,46 @@
 
 clc; clear; close all;
 format long;
-addpath(genpath('LLWING'));
+% addpath(genpath('LLWING'));
+addpath(genpath(fileparts(mfilename('fullpath'))));
+
 % -------------------------------------------------------------------------
 %% INPUT DATA
 % -------------------------------------------------------------------------
 
 % Wing planform (assumes planar wing)
 
-AR = 21.3 ;   % aspect ratio
-TR = 1/5.55 ;   % taper ratio (raiz y cola)
-DE25 = 17 ; % sweep angle at c/4 (deg)
+AR = 9 ;   % aspect ratio
+TR = 0.24 ;   % taper ratio (raiz y cola)
+DE25 = 25; % sweep angle at c/4 (deg)
 
-ETIP = -7.1; % tip twist (deg, negative for washout)
+ETIP = -5; % tip twist (deg, negative for washout)
 
 % Sections data (uses linear interpolation between root and tip)
 
-A0p = [ -1 -1 ]; % root and tip section zero-lift angles (deg)
-CM0p = [ 0.012 0.012 ]; % root and tip section free moments
-CDP = [ 0.0066 -0.0061 0.0063;% root section CD0, k1 and k2  (airfoil CD curve)
-    0.01 -0.0075 0.0096 ] ;  % tip section CD0, k1 and k2
+A0p = [ -2.9531 -2.9531 ]; % root and tip section zero-lift angles (deg)
+CM0p = [ -0.09686 -0.09686 ]; % root and tip section free moments
+CDP = [ 0.006096 -0.002796 0.006573;% root section CD0, k1 and k2  (airfoil CD curve)
+    0.00642 -0.005614 0.0121 ] ;  % tip section CD0, k1 and k2
 % Depending on reynolds number
 
 % Flap/aileron (symmetrical deflection)
+YF_pos = [ 0.0 0.67]; % 2y/b initial and final position of the flap/aileron in the half-wing
+CF_ratio = 0.3 ;  % flap_chord/chord ratio
+DE_flap = 35; % flap deflection (deg, positive:down)
+FlapCorr = 1.315; % flap effectiviness (>=1) because it is seen as a correction
+% effectiveness corrected assuming no change in alpha_stall.
 
-YF_pos = [ 0.0 0.0]; % 2y/b initial and final position of the flap/aileron in the half-wing
-CF_ratio = 0.2 ;  % flap_chord/chord ratio
-DE_flap = 0.0; % flap deflection (deg, positive:down)
-FlapCorr = 1.0 ; % flap effectiviness (<=1)
+% YF_pos = [ 0.0 0]; % 2y/b initial and final position of the flap/aileron in the half-wing
+% CF_ratio = 0 ;  % flap_chord/chord ratio
+% DE_flap = 0; % flap deflection (deg, positive:down)
+% FlapCorr = 1.0 ; % flap effectiviness (<=1)
 
 % Simulation data (by the time being only longitudinal analysis)
 
 N = 100 ; % number of panels along the span
 
-ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10. ] ; % angles of attack for analysis (deg) 
+ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10 10.5 ] ; % angles of attack for analysis (deg) 
 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
@@ -64,7 +71,9 @@ ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10. ] ; % angles of attack for analysis (deg
 % -------------------------------------------------------------------------
 % POSTPROCESS ( your work starts here...)
 % -------------------------------------------------------------------------
-
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
 
 %% Part 1
 %momento de cabeceo 
@@ -99,7 +108,6 @@ Vf=3.02;
 %figure
 %plot(ALPHA,S_balpha);
 
-ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10. ];
 S_bal = pi*0.3.*sqrt((1+(tand(ALPHA)).^2).*(1./(1/0.09+(tand(ALPHA)).^2)));
 figure
 hold on
@@ -131,59 +139,60 @@ xlabel('\alpha [º]')
 ylabel('Cm_f')
 grid on
 
-%2.Wing's Cl. OK
+%2.Wing's Cl - alpha
 figure
-plot(ALPHA, force_coeff(7,:))
-xlabel('\alpha [º]')
-ylabel('Cl')
-grid on
-%alpa0=-4.87
-%Clalpha=0.08
+hold on
+title("\textbf{Plot $C_L$ vs. $\alpha$ $b_f/b = 2/3$}");
+plot(ALPHA, force_coeff(7,:), 'b', 'LineWidth', 1)
+xlabel("$\alpha$ $\left[\mathrm{^\circ}\right]$");
+ylabel("$C_L$ $\left[\mathrm{-}\right]$");
+grid on;
+grid minor;
+box on;
+hold off
+
+disp(force_coeff(7, end));
+
 
 %3.Wing's CM_LE - CL. OK
 CM_le=force_coeff(5,:); 
 figure
+hold on
+title("\textbf{Plot $C_{M_{LE}}$ vs. $\alpha$}");
 plot(force_coeff(7,:),CM_le, 'b');
-xlabel('C_L')
-ylabel('Cm_{LE}')
-grid on
+xlabel("$\alpha$ $\left[\mathrm{^circ}\right]$");
+ylabel("$C_{M_{LE}}$ $\left[\mathrm{-}\right]$");
+grid on;
+grid minor;
+box on;
+hold off
+
 cm_0 = 0.1197;  %Por interpolación
 x_ca_c = -1.498;    %Pendiente de la recta
 X_ac = -1*x_ca_c*mac*bf;    %Cálculo a partir de la mean aerodynamic chord.
 
 
-%NECESSARI?
-%-----------------------------------------------
-%pendent=0.085
-% figure
-% plot(ALPHA, force_coeff(5,:))
-% xlabel('\alpha [º]')
-% ylabel('Cm0')
-% grid on
-% dCmdCl=-0.817;
-% Xac=-dCmdCl*1.55;
-%-------------------------------------------
 
-
-sweep_back= 17; %deg
-lamb=0.28/1.55;
 %X_A no es la posición del centro aerodinámico. 
-X_A= tand(sweep_back)*(bf/6)*((1+2*lamb)/(1+lamb));
+% X_A= tand(sweep_back)*(bf/6)*((1+2*lamb)/(1+lamb));
  
 %4. Additional / Basic Lift. OK
 Cla=(cl_local(:,2)-cl_local(:,3))/(force_coeff(7,2)-force_coeff(7,3));
 Clb=cl_local(:,3)-Cla*force_coeff(7,3);
 figure
-plot(Cla,'b')
 hold on
-plot(Clb,'r')
-xlabel('Paneles')
-ylabel('Cl')
-legend('Cla','Clb')
-grid on
+plot(Cla, 'b', 'LineWidth', 1)
+plot(Clb, 'r', 'LineWidth', 1)
+xlabel("$Spanwise station$ $\left[\mathrm{-}\right]$");
+ylabel("$C_{l}}$ $\left[\mathrm{-}\right]$");
+legend('C_{la}','C_{lb}')
+grid on;
+grid minor;
+box on;
 hold off
 
-%5. Cdo - k model. OK
+
+%5. Cdo - k model. (CON FUSELAJE)
 v = linspace(-1.5, 1, 150);
 pol = polyval([0.021021 -0.0064986 0.1103], v);
 CBW= Cd01+force_coeff(11,:);
@@ -196,9 +205,8 @@ xlabel('C_L')
 ylabel('CD_{BW}')
 hold off
 
-%6. CMcg-CL. OK
-area_trap = 18.8; 
-% Cm0=0.166;
+%6. CMcg-CL. OK 
+
 Xcg=1.3;
 %Distancias adimensionalizadas.
 Cm_cg=cm_0-force_coeff(7,:)*(X_ac - Xcg)/(mac*bf)+C_mf2;  
@@ -210,7 +218,6 @@ ylabel 'CM_{cg}'
 axis equal
 grid on 
 
-%% Part 3. Analysis. 
 
 
 
