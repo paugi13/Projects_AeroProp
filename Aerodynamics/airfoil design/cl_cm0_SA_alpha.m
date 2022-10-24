@@ -1,6 +1,6 @@
 clc;
 clear; close all;
-% addpath(genpath('airfoil design'));
+% addpath(genpath('C:\Users\Usuari\Desktop\Q7\Projectes\Aerodinàmica - Propulsió\Projects_AeroProp\Aerodynamics\airfoil design'));
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
 incr_alpha = 0.01;
@@ -10,7 +10,7 @@ u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
 %% Define new camber line for supercrital airfoils
-coord = table2array(readtable('NASASC(2)0414.csv'));
+coord = table2array(readtable('NASASC(2)0410.csv'));
 point = size(coord,1)/2;
 pan = point-1;
 pos = zeros(point, 2);
@@ -79,10 +79,10 @@ hold off
 
 figure
 hold on
-title("\textbf{$C_l$ vs $\alpha$}");
+title("\textbf{$C_m$ vs $\alpha$}");
 plot(n_alpha, cm_dist(1,:), 'b' , 'LineWidth', 1);
 xlabel('$\alpha$ $\left[\mathrm{^\circ}\right]$')
-ylabel('$C_{m}$ $\left[\mathrm{-}\right]$')
+ylabel('$C_m$ $\left[\mathrm{-}\right]$')
 grid on
 grid minor
 axis equal

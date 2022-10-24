@@ -7,7 +7,6 @@
 
 clc; clear; close all;
 format long;
-% addpath(genpath('LLWING'));
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
 % -------------------------------------------------------------------------
