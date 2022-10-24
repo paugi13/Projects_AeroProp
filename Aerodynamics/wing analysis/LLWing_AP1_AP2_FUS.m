@@ -15,37 +15,37 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 % Wing planform (assumes planar wing)
 
-AR = 9 ;   % aspect ratio
-TR = 0.24 ;   % taper ratio (raiz y cola)
-DE25 = 25; % sweep angle at c/4 (deg)
+AR = 8.6 ;   % aspect ratio
+TR = 0.35 ;   % taper ratio (raiz y cola)
+DE25 = 19; % sweep angle at c/4 (deg)
 
-ETIP = -5; % tip twist (deg, negative for washout)
+ETIP = -6; % tip twist (deg, negative for washout)
 
 % Sections data (uses linear interpolation between root and tip)
-
-A0p = [ -2.9531 -2.9531 ]; % root and tip section zero-lift angles (deg)
-CM0p = [ -0.09686 -0.09686 ]; % root and tip section free moments
+%-2.245
+A0p = [ -2.9531 -2.245 ]; % root and tip section zero-lift angles (deg)
+CM0p = [ -0.09686 -0.07562 ]; % root and tip section free moments
 CDP = [ 0.006096 -0.002796 0.006573;% root section CD0, k1 and k2  (airfoil CD curve)
     0.00642 -0.005614 0.0121 ] ;  % tip section CD0, k1 and k2
 % Depending on reynolds number
 
-% Flap/aileron (symmetrical deflection)
-YF_pos = [ 0.0 0.67]; % 2y/b initial and final position of the flap/aileron in the half-wing
-CF_ratio = 0.3 ;  % flap_chord/chord ratio
-DE_flap = 35; % flap deflection (deg, positive:down)
-FlapCorr = 1.315; % flap effectiviness (>=1) because it is seen as a correction
-% effectiveness corrected assuming no change in alpha_stall.
+%% FLAP CONFIGURATION
+% YF_pos = [ 0.0 0.67]; % 2y/b initial and final position of the flap/aileron in the half-wing
+% CF_ratio = 0.3 ;  % flap_chord/chord ratio
+% DE_flap = 35; % flap deflection (deg, positive:down)
+% FlapCorr = 1.2; % flap effectiviness (>=1) because it is seen as a correction
+% effectiveness corrected assuming no change in alpha_stall. Value so that  
+% Cl_local gives stall at the same angle of attack
 
-% YF_pos = [ 0.0 0]; % 2y/b initial and final position of the flap/aileron in the half-wing
-% CF_ratio = 0 ;  % flap_chord/chord ratio
-% DE_flap = 0; % flap deflection (deg, positive:down)
-% FlapCorr = 1.0 ; % flap effectiviness (<=1)
+%% NO FLAP CONFIGURATION
+YF_pos = [ 0.0 0]; % 2y/b initial and final position of the flap/aileron in the half-wing
+CF_ratio = 0 ;  % flap_chord/chord ratio
+DE_flap = 0; % flap deflection (deg, positive:down)
+FlapCorr = 1.0 ; % flap effectiviness (<=1)
 
-% Simulation data (by the time being only longitudinal analysis)
-
+%% Simulation data (by the time being only longitudinal analysis)
 N = 100 ; % number of panels along the span
-
-ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10 10.5 ] ; % angles of attack for analysis (deg) 
+ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10 10.5 11 12 14 20] ; % angles of attack for analysis (deg) 
 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
