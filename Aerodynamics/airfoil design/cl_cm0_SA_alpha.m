@@ -1,6 +1,5 @@
 clc;
 clear; close all;
-% addpath(genpath('C:\Users\Usuari\Desktop\Q7\Projectes\Aerodinàmica - Propulsió\Projects_AeroProp\Aerodynamics\airfoil design'));
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
 incr_alpha = 0.01;
@@ -46,7 +45,7 @@ set(groot,'defaultLegendInterpreter','latex');
 
 figure
 hold on
-title("\textbf{NASASC(2)-0414}");
+title("\textbf{NASASC(2)-0410}");
 plot(pos(:,1), pos(:,2), 'r');
 plot(coord(1:point, 1), coord(1:point, 2), 'b');
 plot(coord(point+1:point*2, 1), coord(point+1:point*2, 2), 'b');
