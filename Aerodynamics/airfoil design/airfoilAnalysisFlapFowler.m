@@ -72,9 +72,9 @@ set(groot,'defaultLegendInterpreter','latex');
 nClStall = 1551;
 ClStallData = 3.625;
 
-figure
+fig1 = figure(1);
 hold on
-title("\textbf{NASASC(2)-0414} - $35^\circ$ \textbf{Flap Fowler}" );
+title("\textbf{NASASC(2)-0414} - $35^\circ$ $30\%$ \textbf{Flap Fowler}" );
 plot(pos(:,1), pos(:,2), 'r');
 plot(coord(1:point, 1), coord(1:point, 2), 'b');
 plot(coord(point+1:point*2, 1), coord(point+1:point*2, 2), 'b');
@@ -94,7 +94,7 @@ ylabel("$y$ $\left[\mathrm{-}\right]$");
 hold off
 
 
-figure
+fig2 = figure(2);
 hold on
 title("\textbf{$C_l$ vs $\alpha$}");
 scatter(alphaStall, cl_dist(nClStall), [], [1 0 0], 'filled');
@@ -119,3 +119,6 @@ grid on
 grid minor
 axis equal
 hold off
+
+print(fig1, 'airfoil design/plots/NASASC(2)-0414FLAP', '-dpdf', '-r0', '-bestfit');
+print(fig2, 'airfoil design/plots/SC(2)-0414FLAP_Cl_alpha', '-dpdf', '-r0', '-bestfit');

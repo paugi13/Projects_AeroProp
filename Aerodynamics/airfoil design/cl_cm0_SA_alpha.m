@@ -9,7 +9,7 @@ u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
 %% Define new camber line for supercrital airfoils
-coord = table2array(readtable('NASASC(2)0410.csv'));
+coord = table2array(readtable('NASASC(2)0414.csv'));
 point = size(coord,1)/2;
 pan = point-1;
 pos = zeros(point, 2);
@@ -43,19 +43,20 @@ set(groot,'defaultLegendInterpreter','latex');
 
 %% Plot airfoil with camber line
 
-figure
+fig1 = figure(1);
 hold on
-title("\textbf{NASASC(2)-0410}");
+title("\textbf{NASASC(2)-0414}");
 plot(pos(:,1), pos(:,2), 'r');
 plot(coord(1:point, 1), coord(1:point, 2), 'b');
 plot(coord(point+1:point*2, 1), coord(point+1:point*2, 2), 'b');
+xlabel("$x/c$ $\left[\mathrm{-}\right]$");
+ylabel("$y$ $\left[\mathrm{-}\right]$");
 grid on
 grid minor
 axis equal
 hold off
 
-
-figure
+fig2 = figure(2);
 hold on
 title("\textbf{$C_l$ vs $\alpha$}");
 plot(n_alpha, cl_dist(1,:), 'b', 'LineWidth', 1);
@@ -65,7 +66,7 @@ grid on
 grid minor
 hold off
 
-figure
+fig3 = figure(3);
 hold on
 title("\textbf{$C_{m_0}$ vs $\alpha$}");
 plot(n_alpha, cm_0(1,:), 'b' , 'LineWidth', 1);
@@ -76,7 +77,7 @@ grid minor
 axis equal
 hold off
 
-figure
+fig4 = figure(4);
 hold on
 title("\textbf{$C_m$ vs $\alpha$}");
 plot(n_alpha, cm_dist(1,:), 'b' , 'LineWidth', 1);
@@ -86,3 +87,6 @@ grid on
 grid minor
 axis equal
 hold off
+
+print(fig1, 'plots/NASASC(2)-0414', '-dpdf', '-r0', '-bestfit');
+print(fig2, 'plots/SC(2)-0414_Cl_alpha', '-dpdf', '-r0', '-bestfit');
