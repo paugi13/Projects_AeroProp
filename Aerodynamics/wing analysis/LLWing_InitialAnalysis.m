@@ -47,7 +47,7 @@ end
 
 %% Simulation data (by the time being only longitudinal analysis)
 N = 100 ; % number of panels along the span
-ALPHA = [ -10. -8.0 -4.0 0. 4.0 6.0 8.0 10 10.5 11 12 14 20] ; % angles of attack for analysis (deg) 
+ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10 10.5 11 12 14 20] ; % angles of attack for analysis (deg) 
 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
@@ -78,11 +78,12 @@ set(groot,'defaultLegendInterpreter','latex');
 eff = force_coeff(7,:)./force_coeff(11,:);
 Cla=(cl_local(:,2)-cl_local(:,3))/(force_coeff(7,2)-force_coeff(7,3));
 Clb=cl_local(:,3)-Cla*force_coeff(7,3);
+CM_le=force_coeff(5,:); 
 
 % Wing's Cl - alpha
 fig1 = figure(1);
 hold on
-title("\textbf{Plot $C_L$ vs. $\alpha$}");
+title("\textbf{$C_L$ vs. $\alpha$}");
 % title("\textbf{Plot $C_L$ vs. $\alpha$ $b_f/b = 2/3$}");
 plot(ALPHA, force_coeff(7,:), 'b', 'LineWidth', 1)
 xlabel("$\alpha$ $\left[\mathrm{^\circ}\right]$");
@@ -96,11 +97,10 @@ disp(force_coeff(7, end));
 
 % Wing's CM_LE - CL. OK
 fig2 = figure(2);
-CM_le=force_coeff(5,:); 
 hold on
-title("\textbf{Plot $C_{M_{LE}}$ vs. $\alpha$}");
+title("\textbf{$C_{M_{LE}}$ vs. $\alpha$}");
 plot(force_coeff(7,:),CM_le, 'b');
-xlabel("$\alpha$ $\left[\mathrm{^circ}\right]$");
+xlabel("$C_L$ $\left[\mathrm{-}\right]$");
 ylabel("$C_{M_{LE}}$ $\left[\mathrm{-}\right]$");
 grid on;
 grid minor;
@@ -110,10 +110,10 @@ hold off
 % Additional / Basic Lift. OK
 fig3 = figure(3);
 hold on
-title("\textbf{Plot $Lift contributions$ vs. $Wing span$}");
+title("\textbf{$Lift contributions$ vs. $Wing span$}");
 plot(Cla, 'b', 'LineWidth', 1)
 plot(Clb, 'r', 'LineWidth', 1)
-xlabel("$Spanwise station$ $\left[\mathrm{-}\right]$");
+xlabel("Spanwise station $\left[\mathrm{-}\right]$");
 ylabel("$C_{l}$ $\left[\mathrm{-}\right]$");
 legend('$C_{la}$','$C_{lb}$')
 grid on;
@@ -124,7 +124,7 @@ hold off
 % Efficiency (Fuselage drag is missing)
 fig4 = figure(4);
 hold on
-title("\textbf{Plot $L/D$ vs. $\alpha$}");
+title("\textbf{$L/D$ vs. $\alpha$}");
 plot(ALPHA, eff, 'b', 'LineWidth', 1)
 xlabel("$\alpha$ $\left[\mathrm{^\circ}\right]$");
 ylabel("$L/D$ $\left[\mathrm{-}\right]$");
@@ -136,7 +136,7 @@ hold off
 if CF_ratio == 0
     print(fig1, 'wing analysis/plots/simpleWing_CL_Alpha', '-dpdf', '-r0', ...
         '-bestfit');
-    print(fig2, 'wing analysis/plots/simpleWing_CMLE_Alpha', '-dpdf', '-r0', ...
+    print(fig2, 'wing analysis/plots/simpleWing_CMLE_CL', '-dpdf', '-r0', ...
         '-bestfit');
     print(fig3, 'wing analysis/plots/simpleWing_Basic', '-dpdf', '-r0', ...
         '-bestfit');
@@ -145,7 +145,7 @@ if CF_ratio == 0
 else
     print(fig1, 'wing analysis/plots/FlapWing_CL_Alpha', '-dpdf', '-r0', ...
         '-bestfit');
-    print(fig2, 'wing analysis/plots/FlapWing_CMLE_Alpha', '-dpdf', '-r0', ...
+    print(fig2, 'wing analysis/plots/FlapWing_CMLE_CL', '-dpdf', '-r0', ...
         '-bestfit');
     print(fig3, 'wing analysis/plots/FlapWing_Basic', '-dpdf', '-r0', ...
         '-bestfit');
