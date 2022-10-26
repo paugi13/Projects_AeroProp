@@ -133,6 +133,17 @@ grid minor;
 box on;
 hold off
 
+fig5 = figure(5);
+hold on
+title("\textbf{Local $C_l$ vs. Spanwise station ($\alpha = 5^{\circ}$)}");
+plot(c4nods(2,:), cl_local(:, 12), 'b', 'LineWidth', 1);
+xlabel("$x/b$ $\left[\mathrm{-}\right]$");
+ylabel("$C_l$ $\left[\mathrm{-}\right]$");
+grid on;
+grid minor;
+box on;
+hold off
+
 if CF_ratio == 0
     print(fig1, 'wing analysis/plots/simpleWing_CL_Alpha', '-dpdf', '-r0', ...
         '-bestfit');
@@ -141,6 +152,8 @@ if CF_ratio == 0
     print(fig3, 'wing analysis/plots/simpleWing_Basic', '-dpdf', '-r0', ...
         '-bestfit');
     print(fig4, 'wing analysis/plots/simpleWing_LD_alpha', '-dpdf', '-r0', ...
+        '-bestfit');
+    print(fig5, 'wing analysis/plots/simpleWing_LOCAL_Cl', '-dpdf', '-r0', ...
         '-bestfit');
 else
     print(fig1, 'wing analysis/plots/FlapWing_CL_Alpha', '-dpdf', '-r0', ...
