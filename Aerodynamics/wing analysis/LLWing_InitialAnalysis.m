@@ -17,7 +17,7 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 AR = 8.6 ;   % aspect ratio
 TR = 0.35 ;   % taper ratio (raiz y cola)
-DE25 = 19; % sweep angle at c/4 (deg)
+DE25 = 20; % sweep angle at c/4 (deg)
 
 ETIP = -6; % tip twist (deg, negative for washout)
 
