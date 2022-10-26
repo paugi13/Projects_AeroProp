@@ -135,13 +135,15 @@ hold off
 
 fig5 = figure(5);
 hold on
-title("\textbf{Local $C_l$ vs. Spanwise station ($\alpha = 5^{\circ}$)}");
+title("\textbf{Local $C_l$ vs. Spanwise station }");
 plot(c4nods(2,:), cl_local(:, 12), 'b', 'LineWidth', 1);
+plot(c4nods(2,:), cl_local(:, 17), 'r', 'LineWidth', 1);
 xlabel("$x/b$ $\left[\mathrm{-}\right]$");
 ylabel("$C_l$ $\left[\mathrm{-}\right]$");
 grid on;
 grid minor;
 box on;
+legend('$\alpha = 5^{\circ}$', '$\alpha = 10^{\circ}$', 'location', 'south');
 hold off
 
 if CF_ratio == 0
