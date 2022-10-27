@@ -52,22 +52,8 @@ ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
 % -------------------------------------------------------------------------
-
-% Wing discretization (lenghts are dimensionless with the wing span)
-
-[c4nods,c75nods,chord,s_pan,h,Cm0_y,normals,mac,S] = geo(AR,TR,N,DE25,ETIP,A0p,CM0p,CDP,YF_pos,CF_ratio,DE_flap,FlapCorr); 
-
-% Assembly of the influence coefficients matrix (needed once)
-
-[inv_A,wake_len] = infcoeff(N,c4nods,c75nods,normals,h) ;
-
-% Solve circulations for different angles of attack
-
-[GAMMA,Ui,ncases] = getcirc(N,ALPHA,inv_A,normals) ;
-
-% Loads calculation using plane Kutta-Joukowsky theorem (costlier, but general... and illustrative!)
-
-[cl_local,force_coeff] = KuttaJoukowsky(N,c4nods,h,GAMMA,Ui,s_pan,Cm0_y,chord,CDP,ncases,wake_len,S,mac,ALPHA) ;
+[cl_local, c4nods, force_coeff] = GetSolution(N, ALPHA, FlapCorr, ...
+    YF_pos, CF_ratio, DE_flap, A0p, CM0p, CDP, AR, TR, DE25, ETIP);
 
 % -------------------------------------------------------------------------
 %% POSTPROCESS
@@ -146,28 +132,29 @@ box on;
 legend('$\alpha = 5^{\circ}$', '$\alpha = 10^{\circ}$', 'location', 'south');
 hold off
 
-if CF_ratio == 0
-    print(fig1, 'wing analysis/plots/simpleWing_CL_Alpha', '-dpdf', '-r0', ...
-        '-bestfit');
-    print(fig2, 'wing analysis/plots/simpleWing_CMLE_CL', '-dpdf', '-r0', ...
-        '-bestfit');
-    print(fig3, 'wing analysis/plots/simpleWing_Basic', '-dpdf', '-r0', ...
-        '-bestfit');
-    print(fig4, 'wing analysis/plots/simpleWing_LD_alpha', '-dpdf', '-r0', ...
-        '-bestfit');
-    print(fig5, 'wing analysis/plots/simpleWing_LOCAL_Cl', '-dpdf', '-r0', ...
-        '-bestfit');
-else
-    print(fig1, 'wing analysis/plots/FlapWing_CL_Alpha', '-dpdf', '-r0', ...
-        '-bestfit');
-    print(fig2, 'wing analysis/plots/FlapWing_CMLE_CL', '-dpdf', '-r0', ...
-        '-bestfit');
-    print(fig3, 'wing analysis/plots/FlapWing_Basic', '-dpdf', '-r0', ...
-        '-bestfit');
-    print(fig4, 'wing analysis/plots/FlapWing_LD_alpha', '-dpdf', '-r0', ...
-        '-bestfit');
+if size(ALPHA, 2) > 10
+    if CF_ratio == 0
+        print(fig1, 'wing analysis/plots/simpleWing_CL_Alpha', '-dpdf', '-r0', ...
+            '-bestfit');
+        print(fig2, 'wing analysis/plots/simpleWing_CMLE_CL', '-dpdf', '-r0', ...
+            '-bestfit');
+        print(fig3, 'wing analysis/plots/simpleWing_Basic', '-dpdf', '-r0', ...
+            '-bestfit');
+        print(fig4, 'wing analysis/plots/simpleWing_LD_alpha', '-dpdf', '-r0', ...
+            '-bestfit');
+        print(fig5, 'wing analysis/plots/simpleWing_LOCAL_Cl', '-dpdf', '-r0', ...
+            '-bestfit');
+    else
+        print(fig1, 'wing analysis/plots/FlapWing_CL_Alpha', '-dpdf', '-r0', ...
+            '-bestfit');
+        print(fig2, 'wing analysis/plots/FlapWing_CMLE_CL', '-dpdf', '-r0', ...
+            '-bestfit');
+        print(fig3, 'wing analysis/plots/FlapWing_Basic', '-dpdf', '-r0', ...
+            '-bestfit');
+        print(fig4, 'wing analysis/plots/FlapWing_LD_alpha', '-dpdf', '-r0', ...
+            '-bestfit');
+    end
 end
-
 
 
 
