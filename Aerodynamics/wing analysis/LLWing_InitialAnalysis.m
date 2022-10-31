@@ -52,7 +52,7 @@ ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
 % -------------------------------------------------------------------------
-[cl_local, c4nods, force_coeff] = GetSolution(N, ALPHA, FlapCorr, ...
+[cl_local, c4nods, force_coeff, chord] = GetSolution(N, ALPHA, FlapCorr, ...
     YF_pos, CF_ratio, DE_flap, A0p, CM0p, CDP, AR, TR, DE25, ETIP);
 
 % -------------------------------------------------------------------------
@@ -131,6 +131,31 @@ grid minor;
 box on;
 legend('$\alpha = 5^{\circ}$', '$\alpha = 10^{\circ}$', 'location', 'south');
 hold off
+
+% Chord real values
+rootChord = 4.08;
+propValue = rootChord/chord(N/2);
+wingChord = chord*propValue;
+
+% Wingspan real values
+span2 = 11.85;
+propValue = span2/c4nods(2,end);
+spanCoords = c4nods(2, N/2+1:end)*propValue;
+
+fig6 = figure(6);
+hold on
+title("\textbf{Local $C_l$ vs. Spanwise station }");
+plot(spanCoords, cl_local(N/2+1:end, 12).*wingChord(N/2+1:end), 'b', 'LineWidth', 1);
+xlabel("$x/b$ $\left[\mathrm{-}\right]$");
+ylabel("$C_l$ $\left[\mathrm{-}\right]$");
+grid on;
+grid minor;
+box on;
+legend('$\alpha = 5^{\circ}$', 'location', 'south');
+hold off
+
+save('wing analysis/workspaces/wingLiftdist5', 'cl_local', 'spanCoords', ...
+    'wingChord');
 
 if size(ALPHA, 2) > 10
     if CF_ratio == 0
