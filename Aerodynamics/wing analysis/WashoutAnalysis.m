@@ -1,6 +1,8 @@
 clc;
 clear;
 close all;
+format long;
+addpath(genpath(fileparts(mfilename('fullpath'))));
 
 AR = 8.6 ;   % aspect ratio
 TR = 0.35 ;   % taper ratio (raiz y cola)
@@ -43,7 +45,7 @@ maxPos = zeros(size(ETIP, 2), 1);
 for i = 1:size(ETIP, 2)
     [clLocalSeries(i, :), c4nods, force_coeff] = GetSolution(N, ALPHA, FlapCorr, ...
         YF_pos, CF_ratio, DE_flap, A0p, CM0p, CDP, AR, TR, DE25, ETIP(i));
-    [maxAcc(i, 1), maxPos(i,1)] =  max(clLocalSeries(i, :));
+    [maxAcc(i, 1), maxPos(i,1)] =  max(clLocalSeries(i, 1:50));
     if maxPos(i,1) > N/2
         maxPos(i,1) = N - maxPos(i,1);
     end
@@ -63,7 +65,7 @@ for i = 1:size(ETIP, 2)
 plot(c4nods(2,:), clLocalSeries(i,:), 'LineWidth', 1);
 end
 plot(c4nods(2,maxPos), maxAcc(:,1), 'r', 'LineWidth', 1);
-plot(c4nods(2,100-maxPos), maxAcc(:,1), 'r', 'LineWidth', 1);
+plot(c4nods(2,101-maxPos), maxAcc(:,1), 'r', 'LineWidth', 1);
 xlabel("$x/b$ $\left[\mathrm{-}\right]$");
 ylabel("$C_l$ $\left[\mathrm{-}\right]$");
 grid on;
