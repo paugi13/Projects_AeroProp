@@ -1,4 +1,7 @@
 %% Lift computation
+clc; clear; %close all;
+format long;
+addpath(genpath(fileparts(mfilename('fullpath'))));
 
 %% Load workspace for desired incidence angle
 % Only one analysis at the time
@@ -16,21 +19,23 @@ cruiseSpeed = 857/3.6;
 rho = 0.363918;
 q = 0.5*rho*cruiseSpeed^2;
 
-
 %% Calculations
-liftDist = 2*q*wingChord*cl_local(N/2+1:end, 12).*wingChord(N/2+1:end);
+liftDist = 2*q*Cl_Values;
 
-d = 5;
+d = 6;
 dist = @(x) 0;
 for i = 1:length(polinomialFit)
-    dist = dist + polinomialFit(i)*x^d;
+    dist = @(x) dist(x) + polinomialFit(i)*x.^d;
     d = d - 1;
 end
-
 TotalLift = 2*q*integral(dist, spanCoords(1), spanCoords(end));
 
-
 %% Plot lift distribution
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+legendStr = "$\alpha = " + wantedAoA + "^{\circ}$"; 
+
 fig1 = figure(1);
 hold on
 title("\textbf{Local $C_l$ vs. Spanwise station }");
@@ -40,5 +45,5 @@ ylabel("$C_l$ $\left[\mathrm{-}\right]$");
 grid on;
 grid minor;
 box on;
-legend('$\alpha = 5^{\circ}$', 'location', 'south');
+legend(legendStr, 'location', 'south');
 hold off
