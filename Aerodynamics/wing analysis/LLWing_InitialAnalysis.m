@@ -137,15 +137,28 @@ rootChord = 4.08;
 propValue = rootChord/chord(N/2);
 wingChord = chord*propValue;
 
+wantedAoA = 3;
+for i = 1:length(ALPHA)
+    if ALPHA(i) == wantedAoA
+        aux = i;
+        break
+    end
+end
+
 % Wingspan real values
 span2 = 11.85;
 propValue = span2/c4nods(2,end);
 spanCoords = c4nods(2, N/2+1:end)*propValue;
+Cl_Values = cl_local(N/2+1:end, aux).*wingChord(N/2+1:end); 
+polinomialFit = polyfit(spanCoords, Cl_Values', 5);
+
+direct = join(['wing analysis/workspaces/wingLiftdist', num2str(wantedAoA)]);
+save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit');
 
 fig6 = figure(6);
 hold on
 title("\textbf{Local $C_l$ vs. Spanwise station }");
-plot(spanCoords, cl_local(N/2+1:end, 12).*wingChord(N/2+1:end), 'b', 'LineWidth', 1);
+plot(spanCoords, Cl_Values, 'b', 'LineWidth', 1);
 xlabel("$x/b$ $\left[\mathrm{-}\right]$");
 ylabel("$C_l$ $\left[\mathrm{-}\right]$");
 grid on;
@@ -153,9 +166,6 @@ grid minor;
 box on;
 legend('$\alpha = 5^{\circ}$', 'location', 'south');
 hold off
-
-save('wing analysis/workspaces/wingLiftdist5', 'cl_local', 'spanCoords', ...
-    'wingChord');
 
 if size(ALPHA, 2) > 10
     if CF_ratio == 0
