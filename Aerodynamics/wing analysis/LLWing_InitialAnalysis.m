@@ -31,6 +31,7 @@ CDP = [ 0.006096 -0.002796 0.006573;% root section CD0, k1 and k2  (airfoil CD c
 
 %% FLAP CONFIGURATION
 opt = input('Add flap to wing? Y/N (1/0): ');
+wantedAoA = input('Wing incidence angle?: ');
 
 switch opt
     case 1
@@ -47,7 +48,7 @@ end
 
 %% Simulation data (by the time being only longitudinal analysis)
 N = 100 ; % number of panels along the span
-ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10 10.5 11 12 14 20] ; % angles of attack for analysis (deg) 
+ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10 10.5 11 12 14 20] ; % angles of attack for analysis (deg) 
 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
@@ -137,7 +138,6 @@ rootChord = 4.08;
 propValue = rootChord/chord(N/2);
 wingChord = chord*propValue;
 
-wantedAoA = 3;
 for i = 1:length(ALPHA)
     if ALPHA(i) == wantedAoA
         aux = i;
@@ -153,7 +153,8 @@ Cl_Values = cl_local(N/2+1:end, aux).*wingChord(N/2+1:end);
 polinomialFit = polyfit(spanCoords, Cl_Values', 5);
 
 direct = join(['wing analysis/workspaces/wingLiftdist', num2str(wantedAoA)]);
-save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit');
+save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit', ...
+    'Cl_Values');
 
 fig6 = figure(6);
 hold on
