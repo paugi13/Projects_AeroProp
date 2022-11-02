@@ -192,12 +192,3 @@ if size(ALPHA, 2) > 10
             '-bestfit');
     end
 end
-
-
-
-
-
-
-
-
-
