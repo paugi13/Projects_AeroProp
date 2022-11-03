@@ -153,9 +153,15 @@ spanCoords = c4nods(2, N/2+1:end)*propValue;
 Cl_Values = cl_local(N/2+1:end, aux).*wingChord(N/2+1:end); 
 polinomialFit = polyfit(spanCoords, Cl_Values', 5);
 
-direct = join(['wing analysis/workspaces/wingLiftdist', num2str(wantedAoA)]);
-save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit', ...
+if opt == 0
+    direct = join(['wing analysis/workspaces/wingLiftdist', num2str(wantedAoA)]);
+    save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit', ...
     'Cl_Values');
+else
+    direct = join(['wing analysis/workspaces/wingLiftdistFlap', num2str(wantedAoA)]);
+    save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit', ...
+    'Cl_Values');
+end
 
 fig6 = figure(6);
 hold on
