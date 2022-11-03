@@ -9,6 +9,20 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 flightReg = input('Takeoff or cruise regime? (1/0): ' );
 wantedAoA = input('Wing incidence angle?: ');
 
+if mod(wantedAoA, 1) ~= 0
+    if mod(wantedAoA*10, 1) ~= 0    % two decimals
+        st1 = num2str(fix(wantedAoA));
+        st2 = num2str(fix(mod(wantedAoA,1)*10));
+        st3 = num2str(mod(mod(wantedAoA,1)*10, 1)*10);
+        numSt = join([st1, st2, st3]);
+    else % one decimal
+        st1 = num2str(fix(wantedAoA));
+        st2 = num2str(mod(wantedAoA, 1)*10);
+        numSt = join([st1, st2]);
+    end
+else        % no remainder
+    numSt = num2str(wantedAoA);
+end
 
 %% Input data
 % cruise regime: MTOW?
@@ -21,7 +35,7 @@ if flightReg == 1   %takeoff
     rho = 0.974;
     q = 0.5*rho*TOSpeed^2;
     direct = join(['wing analysis/workspaces/wingLiftdistFlap', ...
-        num2str(wantedAoA)]);
+        numSt]);
     load(direct);
 else    %cruise
     cruiseWeight = MTOW * 0.85;
@@ -29,7 +43,7 @@ else    %cruise
     rho = 0.363918;
     q = 0.5*rho*cruiseSpeed^2;
     direct = join(['wing analysis/workspaces/wingLiftdist', ...
-        num2str(wantedAoA)]);
+        numSt]);
     load(direct);
 end
 
