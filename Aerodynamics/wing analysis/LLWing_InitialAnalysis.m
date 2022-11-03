@@ -32,6 +32,7 @@ CDP = [ 0.006096 -0.002796 0.006573;% root section CD0, k1 and k2  (airfoil CD c
 %% FLAP CONFIGURATION
 opt = input('Add flap to wing? Y/N (1/0): ');
 wantedAoA = input('Wing incidence angle?: ');
+printPlots = input('Print results? Y/N (1/0): ');
 
 switch opt
     case 1
@@ -48,8 +49,8 @@ end
 
 %% Simulation data (by the time being only longitudinal analysis)
 N = 100 ; % number of panels along the span
-ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 0.5 0.75 1.0 2.0 3.0 4.0 5.0 6.0 ...
-    7.0 8.0 9.0 10 10.5 11 12 14 20] ; % angles of attack for analysis (deg) 
+ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 0.5 0.75 1.0 3.0 5.0 5.25 5.5 6.0 ...
+    7.0 9.0 10 10.5  14 20] ; % angles of attack for analysis (deg) 
 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
@@ -175,26 +176,28 @@ box on;
 legend('$\alpha = 5^{\circ}$', 'location', 'south');
 hold off
 
-if size(ALPHA, 2) > 10
-    if CF_ratio == 0
-        print(fig1, 'wing analysis/plots/simpleWing_CL_Alpha', '-dpdf', '-r0', ...
-            '-bestfit');
-        print(fig2, 'wing analysis/plots/simpleWing_CMLE_CL', '-dpdf', '-r0', ...
-            '-bestfit');
-        print(fig3, 'wing analysis/plots/simpleWing_Basic', '-dpdf', '-r0', ...
-            '-bestfit');
-        print(fig4, 'wing analysis/plots/simpleWing_LD_alpha', '-dpdf', '-r0', ...
-            '-bestfit');
-        print(fig5, 'wing analysis/plots/simpleWing_LOCAL_Cl', '-dpdf', '-r0', ...
-            '-bestfit');
-    else
-        print(fig1, 'wing analysis/plots/FlapWing_CL_Alpha', '-dpdf', '-r0', ...
-            '-bestfit');
-        print(fig2, 'wing analysis/plots/FlapWing_CMLE_CL', '-dpdf', '-r0', ...
-            '-bestfit');
-        print(fig3, 'wing analysis/plots/FlapWing_Basic', '-dpdf', '-r0', ...
-            '-bestfit');
-        print(fig4, 'wing analysis/plots/FlapWing_LD_alpha', '-dpdf', '-r0', ...
-            '-bestfit');
+if printPlots == 1
+    if size(ALPHA, 2) > 10
+        if CF_ratio == 0
+            print(fig1, 'wing analysis/plots/simpleWing_CL_Alpha', ...
+                '-dpdf', '-r0', '-bestfit');
+            print(fig2, 'wing analysis/plots/simpleWing_CMLE_CL', ...
+                '-dpdf', '-r0', '-bestfit');
+            print(fig3, 'wing analysis/plots/simpleWing_Basic', ...
+                '-dpdf', '-r0', '-bestfit');
+            print(fig4, 'wing analysis/plots/simpleWing_LD_alpha', ...
+                '-dpdf', '-r0', '-bestfit');
+            print(fig5, 'wing analysis/plots/simpleWing_LOCAL_Cl', ...
+                '-dpdf', '-r0', '-bestfit');
+        else
+            print(fig1, 'wing analysis/plots/FlapWing_CL_Alpha', ... 
+                '-dpdf', '-r0', '-bestfit');
+            print(fig2, 'wing analysis/plots/FlapWing_CMLE_CL', ...
+                '-dpdf', '-r0','-bestfit');
+            print(fig3, 'wing analysis/plots/FlapWing_Basic', ...
+                '-dpdf', '-r0', '-bestfit');
+            print(fig4, 'wing analysis/plots/FlapWing_LD_alpha', ...
+                '-dpdf', '-r0', '-bestfit');
+        end
     end
 end

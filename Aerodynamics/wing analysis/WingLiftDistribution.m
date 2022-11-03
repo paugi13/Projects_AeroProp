@@ -1,5 +1,5 @@
 %% Lift computation
-clc; clear; %close all;
+clc; clear; close all;
 format long;
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
@@ -48,13 +48,25 @@ else    %cruise
 end
 
 liftDist = 2*q*Cl_Values;
-d = 6;      % polynomial degree = d - 1.
+d = 5;      % polynomial degree = d - 1.
 dist = @(x) 0;
 for i = 1:length(polinomialFit)
     dist = @(x) dist(x) + polinomialFit(i)*x.^d;
     d = d - 1;
 end
-TotalLift = 2*q*integral(dist, spanCoords(1), spanCoords(end));
+startCoord = spanCoords(1);
+endCoord = spanCoords(end);
+TotalLift = 2*q*integral(dist, startCoord, endCoord);
+
+if flightReg == 1
+    disp(['TOW =  ', num2str(TOW)]);
+    disp(['Incidence angle = ', num2str(wantedAoA)]);
+    disp(['Provided Lift = ', num2str(TotalLift)]);
+else
+    disp(['Cruise weight =  ', num2str(cruiseWeight)]);
+    disp(['Incidence angle = ', num2str(wantedAoA)]);
+    disp(['Provided Lift = ', num2str(TotalLift)]);
+end
 
 %% Plot lift distribution
 set(groot,'defaultAxesTickLabelInterpreter','latex');  
@@ -73,3 +85,5 @@ grid minor;
 box on;
 legend(legendStr, 'location', 'south');
 hold off
+
+save('wing analysis/workspaces/NoFlapData', 'polinomialFit', 'q', 'startCoord', 'endCoord')
