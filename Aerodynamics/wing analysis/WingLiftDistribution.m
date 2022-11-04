@@ -31,7 +31,7 @@ MTOW = 39850*9.81;
 %% Calculations
 if flightReg == 1   %takeoff
     TOW = MTOW;
-    TOSpeed = 270.392;
+    TOSpeed = 270.392/3.6;
     rho = 0.974;
     q = 0.5*rho*TOSpeed^2;
     direct = join(['wing analysis/workspaces/wingLiftdistFlap', ...
@@ -86,4 +86,11 @@ box on;
 legend(legendStr, 'location', 'south');
 hold off
 
-save('wing analysis/workspaces/NoFlapData', 'polinomialFit', 'q', 'startCoord', 'endCoord')
+%% Save workspace
+if flightReg == 1   % takeoff
+direct = join(['wing analysis/workspaces/TakeOffData', numSt]);
+save(direct , 'polinomialFit', 'q', 'startCoord', 'endCoord');
+else    % cruise
+direct = join(['wing analysis/workspaces/CruiseData', numSt]);
+save(direct , 'polinomialFit', 'q', 'startCoord', 'endCoord');
+end
