@@ -3,6 +3,8 @@ clear; close all;
 % addpath(genpath('C:\Users\Usuari\Desktop\Q7\Projectes\Aerodinàmica - Propulsió\Projects_AeroProp\Aerodynamics\airfoil design'));
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
+%% FOWLER FLAP ANALYSIS READING .CSV FILE
+
 incr_alpha = 0.01;
 n_alpha = -5:incr_alpha:20;
 alpha =-5;                                      %Angle of attack.

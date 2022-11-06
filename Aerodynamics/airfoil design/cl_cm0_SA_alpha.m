@@ -2,6 +2,8 @@ clc;
 clear; close all;
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
+%% SINGLE AIRFOIL ANALYSIS READING .CSV FILE
+
 incr_alpha = 0.01;
 n_alpha = -5:incr_alpha:20;
 alpha =-5;                                      %Angle of attack.
@@ -9,7 +11,7 @@ u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
 %% Define new camber line for supercrital airfoils
-coord = table2array(readtable('NASASC(2)0414.csv'));
+coord = table2array(readtable('NASASC(2)0410.csv'));
 point = size(coord,1)/2;
 pan = point-1;
 pos = zeros(point, 2);
@@ -25,7 +27,6 @@ cm_0 = zeros(1, length(n_alpha));
 
 %% Airfoil analysis
 for i=1:length(n_alpha)
-    point=pan+1;
     [cl_dist(1, i), cm_dist(1, i)] = cl_cm0_NACA_alpha_function(point, pan, alpha, pos, 0, 0);
     cm_0(1, i) = cl_dist(1, i)*0.25 + cm_dist(1, i);
     if int32(alpha) == 5
