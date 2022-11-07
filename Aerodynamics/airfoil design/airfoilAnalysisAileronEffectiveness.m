@@ -3,7 +3,7 @@ clear; close all;
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
 %% AILERON EFFECTIVENESS ANALYSIS. 
-
+% Code to get aileron effectiveness. 
 incr_alpha = 0.5;
 n_alpha = -5:incr_alpha:20;
 alpha = -5;                                      %Angle of attack.

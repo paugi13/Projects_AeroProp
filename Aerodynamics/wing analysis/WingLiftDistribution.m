@@ -5,7 +5,6 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 %% Load workspace for desired incidence angle
 % Only one analysis at the time
-
 flightReg = input('Takeoff or cruise regime? (1/0): ' );
 wantedAoA = input('Wing incidence angle?: ');
 

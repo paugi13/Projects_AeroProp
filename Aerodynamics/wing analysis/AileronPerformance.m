@@ -2,6 +2,7 @@ clc;
 clear; close all;
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
+% Code to analyze aileron performance given with its geometry als data.
 %% Load workspace
 wantedAoA = input('Wing incidence angle?: ');
 numSt = buildStringAD(wantedAoA);
@@ -100,9 +101,3 @@ PssDer = Pss^2/(2*SSAngle);
 tss = sqrt(2*SSAngle/PssDer);
 
 rollAngle = @(t) SSAngle + Pss*(t-tss);
-
-
-
-
-
-
