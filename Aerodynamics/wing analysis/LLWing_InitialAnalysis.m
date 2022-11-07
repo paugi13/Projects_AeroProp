@@ -1,10 +1,7 @@
 
 % -------------------------------------------------------------------------     
-% PROGRAM LLWING: Weissinger lifting-line method for trapezoidal wings
-% 220024 Aerodinàmica ESEIAAT-UPC
-% e.ortega@upc.edu
+% WING MAIN ANALYSIS WITH DATA SAVING FOR DESIRED ANGLE OF ATTACK.
 % -------------------------------------------------------------------------     
-
 clc; clear; close all;
 format long;
 addpath(genpath(fileparts(mfilename('fullpath'))));
@@ -154,12 +151,13 @@ spanCoords = c4nods(2, N/2+1:end)*propValue;
 Cl_Values = cl_local(N/2+1:end, aux).*wingChord(N/2+1:end); 
 polinomialFit = polyfit(spanCoords, Cl_Values', 5);
 
+numSt = buildStringAD(wantedAoA);
 if opt == 0
-    direct = join(['wing analysis/workspaces/wingLiftdist', num2str(wantedAoA)]);
+    direct = join(['wing analysis/workspaces/wingLiftdist', numSt]);
     save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit', ...
     'Cl_Values');
 else
-    direct = join(['wing analysis/workspaces/wingLiftdistFlap', num2str(wantedAoA)]);
+    direct = join(['wing analysis/workspaces/wingLiftdistFlap', numSt]);
     save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit', ...
     'Cl_Values');
 end
