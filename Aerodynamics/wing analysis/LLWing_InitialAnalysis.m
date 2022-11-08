@@ -52,7 +52,7 @@ ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 0.5 0.75 1.0 3.0 5.0 5.25 5.5 6.
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
 % -------------------------------------------------------------------------
-[cl_local, c4nods, force_coeff, chord] = GetSolution(N, ALPHA, FlapCorr, ...
+[cl_local, c4nods, force_coeff, chord, MAC] = GetSolution(N, ALPHA, FlapCorr, ...
     YF_pos, CF_ratio, DE_flap, A0p, CM0p, CDP, AR, TR, DE25, ETIP);
 
 % -------------------------------------------------------------------------
@@ -132,24 +132,36 @@ box on;
 legend('$\alpha = 5^{\circ}$', '$\alpha = 10^{\circ}$', 'location', 'south');
 hold off
 
-% Chord real values
+% Chord real values and wing's AC.
 rootChord = 4.08;
 propValue = rootChord/chord(N/2);
 wingChord = chord*propValue;
+MAC = MAC*propValue;
 
-for i = 1:length(ALPHA)
-    if ALPHA(i) == wantedAoA
+for i = 1:size(wingChord, 1)
+    if wingChord(i) > MAC
         aux = i;
         break
     end
 end
 
-% Wingspan real values
+% Wingspan real values and polinomial fit.
+for i = 1:length(ALPHA)
+    if ALPHA(i) == wantedAoA
+        aux2 = i;
+        break
+    end
+end
+
 span2 = 11.85;
 propValue = span2/c4nods(2,end);
 spanCoords = c4nods(2, N/2+1:end)*propValue;
-Cl_Values = cl_local(N/2+1:end, aux).*wingChord(N/2+1:end); 
+Cl_Values = cl_local(N/2+1:end, aux2).*wingChord(N/2+1:end); 
 polinomialFit = polyfit(spanCoords, Cl_Values', 5);
+
+sweepCoords = c4nods(1, 1:end)*propValue;
+CPCoords = [(spanCoords(end-aux-1)+spanCoords(end-aux-2))/2, ...
+    (sweepCoords(aux)+sweepCoords(aux-1))/2+MAC/4];
 
 numSt = buildStringAD(wantedAoA);
 if opt == 0
