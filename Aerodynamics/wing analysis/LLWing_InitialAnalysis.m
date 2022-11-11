@@ -1,4 +1,3 @@
-
 % -------------------------------------------------------------------------     
 % WING MAIN ANALYSIS WITH DATA SAVING FOR DESIRED ANGLE OF ATTACK.
 % -------------------------------------------------------------------------     
@@ -14,7 +13,7 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 AR = 8.6 ;   % aspect ratio
 TR = 0.35 ;   % taper ratio (raiz y cola)
-DE25 = 22.5; % sweep angle at c/4 (deg)
+DE25 = 20; % sweep angle at c/4 (deg)
 
 ETIP = -4; % tip twist (deg, negative for washout)
 
@@ -84,7 +83,7 @@ disp(force_coeff(7, end));
 % Wing's CM_LE - CL. OK
 fig2 = figure(2);
 hold on
-title("\textbf{$C_{M_{LE}}$ vs. $\alpha$}");
+title("\textbf{$C_{M_{LE}}$ vs. $\C_L$}");
 plot(force_coeff(7,:),CM_le, 'b');
 xlabel("$C_L$ $\left[\mathrm{-}\right]$");
 ylabel("$C_{M_{LE}}$ $\left[\mathrm{-}\right]$");
@@ -163,15 +162,18 @@ sweepCoords = c4nods(1, 1:end)*propValue;
 CPCoords = [(spanCoords(end-aux-1)+spanCoords(end-aux-2))/2, ...
     (sweepCoords(aux)+sweepCoords(aux-1))/2+MAC/4];
 
+wingCL = force_coeff(7, aux2);
+wingCM = force_coeff(5, aux2);
+
 numSt = buildStringAD(wantedAoA);
 if opt == 0
     direct = join(['wing analysis/workspaces/wingLiftdist', numSt]);
     save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit', ...
-    'Cl_Values');
+    'Cl_Values', 'wingCL', 'wingCM');
 else
     direct = join(['wing analysis/workspaces/wingLiftdistFlap', numSt]);
     save(direct, 'cl_local', 'spanCoords', 'wingChord', 'polinomialFit', ...
-    'Cl_Values');
+    'Cl_Values','force_coeff', 'wingCL', 'wingCM');
 end
 
 fig6 = figure(6);
