@@ -6,23 +6,23 @@ close all;
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
 % genData = table2array(readtable('SC20414-Cl_Cd.csv'));
-genData = readmatrix('0012_Cl_Cd.csv');
+genData = readmatrix('0010_Cl_Cd.csv');
 
 % For Re(1.000.000) and Re(3.000.000), 1-2, 5-6.
 fig1= figure(1);
 hold on
 title("\textbf{Plot $C_d$ vs. $C_l$}");
-plot(genData(30:end-60,7), genData(30:end-60,8), 'b' , 'LineWidth', 1);
-% plot(genData(:,7), genData(:,8), 'b' , 'LineWidth', 1);
+plot(genData(20:end-50,1), genData(20:end-50,2), 'b' , 'LineWidth', 1);
+plot(genData(20:end-50,7), genData(20:end-50,8), 'r' , 'LineWidth', 1);
 xlabel("$C_l$ $\left[\mathrm{^\circ}\right]$");
 ylabel("$C_d$ $\left[\mathrm{-}\right]$");
-legend('Re = 3.000.000', 'location', 'northwest');
+legend('Re = 1.000.000', 'Re = 3.000.000', 'location', 'northwest');
 grid on;
 grid minor;
 box on;
 hold off
 
-print(fig1, 'airfoil design/plots/SC(2)-0012_Cl_Cd', '-dpdf', '-r0', ...
+print(fig1, 'airfoil design/plots/SC(2)-0410_Cl_Cd', '-dpdf', '-r0', ...
     '-bestfit');
 
 

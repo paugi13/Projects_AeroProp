@@ -3,7 +3,6 @@ clear; close all;
 addpath(genpath(fileparts(mfilename('fullpath'))));
 
 %% SINGLE AIRFOIL ANALYSIS READING .CSV FILE
-
 incr_alpha = 0.01;
 n_alpha = -5:incr_alpha:20;
 alpha =-5;                                      %Angle of attack.
@@ -11,7 +10,7 @@ u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
 %% Define new camber line for supercrital airfoils
-coord = table2array(readtable('NASASC(2)0410.csv'));
+coord = table2array(readtable('NASASC(2)0012.csv'));
 point = size(coord,1)/2;
 pan = point-1;
 pos = zeros(point, 2);
@@ -46,7 +45,7 @@ set(groot,'defaultLegendInterpreter','latex');
 
 fig1 = figure(1);
 hold on
-title("\textbf{NASASC(2)-0414}");
+title("\textbf{NASASC(2)-0012}");
 plot(pos(:,1), pos(:,2), 'r');
 plot(coord(1:point, 1), coord(1:point, 2), 'b');
 plot(coord(point+1:point*2, 1), coord(point+1:point*2, 2), 'b');
@@ -89,5 +88,5 @@ grid minor
 axis equal
 hold off
 
-print(fig1, 'plots/NASASC(2)-0414', '-dpdf', '-r0', '-bestfit');
-print(fig2, 'plots/SC(2)-0414_Cl_alpha', '-dpdf', '-r0', '-bestfit');
+print(fig1, 'plots/NASASC(2)-0012', '-dpdf', '-r0', '-bestfit');
+print(fig2, 'plots/SC(2)-0012_Cl_alpha', '-dpdf', '-r0', '-bestfit');
