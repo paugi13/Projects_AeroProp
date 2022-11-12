@@ -1,5 +1,5 @@
 % -------------------------------------------------------------------------     
-% WING MAIN ANALYSIS WITH DATA SAVING FOR DESIRED ANGLE OF ATTACK.
+% TAIL MAIN ANALYSIS WITH DATA SAVING.
 % -------------------------------------------------------------------------     
 clc; clear; close all;
 format long;
@@ -11,8 +11,8 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 % Wing planform (assumes planar wing)
 
-AR = 3.5;   % aspect ratio
-TR = 0.4 ;   % taper ratio (raiz y cola)
+AR = 4;   % aspect ratio
+TR = 0.35 ;   % taper ratio (raiz y cola)
 DE25 = 20; % sweep angle at c/4 (deg)
 
 ETIP = -0.5; % tip twist (deg, negative for washout)
@@ -121,14 +121,14 @@ hold off
 fig5 = figure(5);
 hold on
 title("\textbf{Local $C_l$ vs. Spanwise station }");
-plot(c4nods(2,:), cl_local(:, 12), 'b', 'LineWidth', 1);
-plot(c4nods(2,:), cl_local(:, 17), 'r', 'LineWidth', 1);
+plot(c4nods(2,:), cl_local(:, 5), 'b', 'LineWidth', 1);
+plot(c4nods(2,:), cl_local(:, 7), 'r', 'LineWidth', 1);
 xlabel("$x/b$ $\left[\mathrm{-}\right]$");
 ylabel("$C_l$ $\left[\mathrm{-}\right]$");
 grid on;
 grid minor;
 box on;
-legend('$\alpha = 5^{\circ}$', '$\alpha = 10^{\circ}$', 'location', 'south');
+legend('$\alpha = -5^{\circ}$', '$\alpha = -2^{\circ}$', 'location', 'south');
 hold off
 
 %% Moment compensation
@@ -136,7 +136,7 @@ XcgMTOW = 14.4408977318597;
 Xwing = 15.0317525;
 WingTailD = 13.65;
 VolumeCoeff = 1.05;
-Xtail = -((Xwing-XcgMTOW)+WingTailD);
+XtailCG = -((Xwing-XcgMTOW)+WingTailD);
 
 % Tail data
 tailClSlope = polyfit(ALPHA, force_coeff(7, :), 1);
@@ -145,13 +145,17 @@ disp('TAIL PITCHING MOMENT ANALYSIS');
 flightReg = input('Takeoff or cruise regime? (1/0): ' );
 FuselageAoA = input('Fuselage angle of attack: ' ); 
 
-[ResMoment, TailS] = PitchingCalc(XcgMTOW, WingTailD,Xwing, Xtail, ... 
+[ResMoment, TailS, CMalpha] = PitchingCalc(XcgMTOW, WingTailD,Xwing, XtailCG, ... 
     flightReg, tailIncidence, tailClSlope, VolumeCoeff, FuselageAoA);
+disp(ResMoment);
 
 saveRes = input('Save tail parameters? Y/N (1/0): ');
 if saveRes == 1
-    save('wing analysis/workspaces/tailParameters', 'tailIncidence', ...
-        'VolumeCoeff', 'AR', 'TR', 'TailS');
+    confVersion = input('Tail Version: ');
+    directSave = join(['wing analysis/workspaces/TailParameters', ...
+    num2str(confVersion)]);
+    save(directSave, 'tailIncidence', 'ETIP', 'YF_pos',...
+        'VolumeCoeff', 'AR', 'TR', 'TailS', 'CF_ratio', 'DE_flap');
 end
 
 %% Print plots
