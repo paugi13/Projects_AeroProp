@@ -1,4 +1,4 @@
-function [ResMoment, TailS] = PitchingCalc(XcgMTOW, WingTailD,Xwing, Xtail, ... 
+function [ResMoment, TailS, CMalpha] = PitchingCalc(XcgMTOW, WingTailD,Xwing, XtailCG, ... 
     flightReg, tailIncidence, tailClSlope, VolumeCoeff, FuselageAoA)
 % Function to calculate resultant pitching moment taking geometry and tail
 % properties as inputs.
@@ -37,7 +37,13 @@ tailCL = tailClSlope(1)*(tailIncidence + FuselageAoA - eps) + tailClSlope(2);
 tailLift = q*TailS*tailCL;
 M1 = wingLift*(XcgMTOW-Xwing);
 M2 = wingMoment;
-M3 = tailLift*Xtail;
+M3 = tailLift*XtailCG;
+
+% Pitching moment slope: < 0 means stable conf.
+CMalpha = ClSlope(1)*(XcgMTOW-Xwing) + tailClSlope(1)*(TailS/WingS)*XtailCG*(1-...
+    epsAlphaSlope);
+
+% Resultant moment
 ResMoment = M1 + M2 + M3;
 end
 
