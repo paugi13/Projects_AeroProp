@@ -27,7 +27,7 @@ cm_0 = zeros(1, length(n_alpha));
 
 %% Aileron parameters. Flap approach
 def = 1;
-xhVector = linspace(0, 1, 100);
+xhVector = linspace(0, 1, 200);
 effVector = zeros(1, length(xhVector));
 % NASASC(2)0410 zero lift angle = -2.2917
 al0Simple = 0;
