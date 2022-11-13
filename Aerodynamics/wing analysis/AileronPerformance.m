@@ -78,26 +78,8 @@ CLSlope = resultInt/surfAileron/wantedAoA;
 rollSlope = 2*CLSlope*eff/(wingS*b)*intResult;
 rollCoeff = rollSlope*meanAngle;
 totalRM = q*wingS*rollCoeff*b;
-rotAngAcc = (totalRM/Ixx);
+rotAngAcc = (totalRM/Ixx)*180/pi;
+requiredTime30 = sqrt(30*2/rotAngAcc);
 
-
-%% Pss and P calculus
-% PROBLEM: STEADY STATE IS REALLY FAR. DRAG CAN'T EQUAL THE MOMENTUM.
-% ROLLING IS AN ACCELERATING MOVEMENT.
-CDr = 1.2;
-fracHTail = 0.22;
-fracVTail = 0.2;
-S = wingS*(1 + fracHTail + fracVTail);
-yD = 6; % conservative value.
-
-% Pss reached when rolling moment equals drag rolling moment.
-Pss = sqrt(2*totalRM/(rho*S*CDr*yD^3));     % steady state angular velocity
-
-% integral 12.32 result for 0 - Pss 
-SSAngle = (Ixx/(rho*S*CDr*yD^3))*log(Pss^2);
-
-% simplification made:  tss not accounted for. 
-PssDer = Pss^2/(2*SSAngle);
-tss = sqrt(2*SSAngle/PssDer);
-
-rollAngle = @(t) SSAngle + Pss*(t-tss);
+disp([num2str(requiredTime30), ' s']);
+disp([num2str(rotAngAcc), ' degress per squared second']);
