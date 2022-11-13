@@ -53,7 +53,7 @@ for i = 1:length(FuselageAoA)
     end
     
     if avAngle == 1
-        tailTrimAngle(i) = DE_flap(j);
+        tailTrimAngle(i) = DE_flap(aux);
     else
         error('Unable to find trim angle for %s.', FuselageAoA(i));
     end
