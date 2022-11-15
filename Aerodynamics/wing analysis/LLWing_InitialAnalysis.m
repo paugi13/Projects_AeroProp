@@ -46,7 +46,7 @@ end
 %% Simulation data (by the time being only longitudinal analysis)
 N = 100 ; % number of panels along the span
 ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 0.5 0.75 1.0 3.0 5.0 5.25 5.5 6.0 ...
-    7.0 9.0 10 10.5  14 20] ; % angles of attack for analysis (deg) 
+    7.0 9.0 10 10.5  14 20 22 23 24] ; % angles of attack for analysis (deg) 
 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
