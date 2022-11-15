@@ -1,4 +1,5 @@
-%% Calculate needed flap angle to trim the wing
+%% Plane pitching moment trim 
+% Calculate needed flap angle to trim the wing
 clc;
 clear;
 close all;
@@ -21,8 +22,9 @@ WingTailD = 13.65;
 VolumeCoeff = 1.05;
 XtailCG = -((Xwing-XcgMTOW)+WingTailD);
 
+AnalysisSize = 5000;
 % Flap deflection vector
-DE_flap = linspace(-50, 40, 5000); % flap deflection (deg, positive:down)
+DE_flap = linspace(-50, 40, AnalysisSize); % flap deflection (deg, positive:down)
 
 % Iteration data
 ToL = 500; % tolerated error [Nm]
@@ -33,6 +35,7 @@ flightReg = 1;  % results do not depend on rho and V.
 for i = 1:length(FuselageAoA)
     avAngle = 0;
     for j = 1:length(DE_flap)
+        
         [ResMoment, TailS, CMalpha] = PitchingEffectiveness(XcgMTOW, ...
             WingTailD,Xwing, XtailCG, flightReg, tailIncidence, ...
             tailCLSlope, VolumeCoeff, FuselageAoA(i), TailEff, DE_flap(j));
@@ -60,7 +63,7 @@ directSave = join(['wing analysis/plots/TailTrim', ...
 
 fig1 = figure(1);
 hold on
-title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $i_{hw} = -8.18^\circ$}");
+title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $i_{hw} = -8.42^\circ$}");
 plot(FuselageAoA, tailTrimAngle, 'b', 'LineWidth', 1);
 xlabel("$\alpha_{wb}$ $\left[\mathrm{^\circ}\right]$");
 ylabel("$\delta_e$ $\left[\mathrm{^\circ}\right]$");
