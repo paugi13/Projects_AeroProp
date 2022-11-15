@@ -8,6 +8,7 @@ MAC = 2.986225279129153;     % mean aerodynamic chord
 AR = 8.6;
 WingIncidence = 5.25;
 TailS = VolumeCoeff*MAC*WingS/WingTailD;
+mu = 0.97;
 
 % Load wing data for selected regime
 if flightReg == 1   %takeoff (flap)
@@ -36,7 +37,7 @@ eps = eps0 + epsAlphaSlope*FuselageAoA;
 
 tailCL = tailClSlope(1)*(tailIncidence + FuselageAoA - eps + ...
     TailEff*DE_Flap) + tailClSlope(2);
-tailLift = q*TailS*tailCL;
+tailLift = q*TailS*tailCL*mu;
 M1 = wingLift*(XcgMTOW-Xwing);
 M2 = wingMoment;
 M3 = tailLift*XtailCG;

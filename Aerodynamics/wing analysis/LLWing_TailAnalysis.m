@@ -1,5 +1,5 @@
 % -------------------------------------------------------------------------     
-% TAIL MAIN ANALYSIS WITH DATA SAVING.
+% HORIZONTAL TAIL MAIN ANALYSIS WITH DATA SAVING.
 % -------------------------------------------------------------------------     
 clc; clear; close all;
 format long;
