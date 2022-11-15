@@ -58,12 +58,16 @@ disp(tailTrimAngle(1));
 set(groot,'defaultAxesTickLabelInterpreter','latex');  
 set(groot,'defaulttextinterpreter','latex');
 set(groot,'defaultLegendInterpreter','latex');
-directSave = join(['wing analysis/plots/TailTrim', ...
-    numSt]);
+
+if flightReg == 1
+directSave = 'wing analysis/plots/TailTrimFlap';
+else
+    directSave = 'wing analysis/plots/TailTrimCruise';
+end
 
 fig1 = figure(1);
 hold on
-title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $i_{hw} = -8.42^\circ$}");
+title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $i_{hw} = -8.58^\circ$}");
 plot(FuselageAoA, tailTrimAngle, 'b', 'LineWidth', 1);
 xlabel("$\alpha_{wb}$ $\left[\mathrm{^\circ}\right]$");
 ylabel("$\delta_e$ $\left[\mathrm{^\circ}\right]$");
