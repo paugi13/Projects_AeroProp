@@ -46,7 +46,7 @@ end
 %% Simulation data (by the time being only longitudinal analysis)
 N = 100 ; % number of panels along the span
 ALPHA = [ -10. -9.0 -8.0 -7.0 -5.0 -4.0 -2.0 0. 0.5 0.75 1.0 3.0 5.0 5.25 5.5 6.0 ...
-    7.0 9.0 10 10.5  14 20 22 23 24] ; % angles of attack for analysis (deg) 
+    7.0 9.0 10 10.5  14 20 ] ; % angles of attack for analysis (deg) 
 
 % -------------------------------------------------------------------------
 %% LIFTING LINE SOLUTION
@@ -131,6 +131,17 @@ box on;
 legend('$\alpha = 5^{\circ}$', '$\alpha = 10^{\circ}$', 'location', 'south');
 hold off
 
+fig6 = figure(6);
+hold on
+title("\textbf{$C_D$ vs. $C_L$ }");
+plot(force_coeff(7,:), force_coeff(11,:), 'b', 'LineWidth', 1);
+xlabel("$C_L$ $\left[\mathrm{-}\right]$");
+ylabel("$C_D$ $\left[\mathrm{-}\right]$");
+grid on;
+grid minor;
+box on;
+hold off
+
 % Chord real values and wing's AC.
 rootChord = 4.08;
 propValue = rootChord/chord(N/2);
@@ -176,7 +187,7 @@ else
     'Cl_Values','force_coeff', 'wingCL', 'wingCM');
 end
 
-fig6 = figure(6);
+fig7 = figure(7);
 hold on
 title("\textbf{Local $C_l$ vs. Spanwise station }");
 plot(spanCoords, Cl_Values, 'b', 'LineWidth', 1);
@@ -201,6 +212,8 @@ if printPlots == 1
                 '-dpdf', '-r0', '-bestfit');
             print(fig5, 'wing analysis/plots/simpleWing_LOCAL_Cl', ...
                 '-dpdf', '-r0', '-bestfit');
+            print(fig6, 'wing analysis/plots/simpleWing_CD_CL', ...
+                '-dpdf', '-r0', '-bestfit');
         else
             print(fig1, 'wing analysis/plots/FlapWing_CL_Alpha', ... 
                 '-dpdf', '-r0', '-bestfit');
@@ -209,6 +222,8 @@ if printPlots == 1
             print(fig3, 'wing analysis/plots/FlapWing_Basic', ...
                 '-dpdf', '-r0', '-bestfit');
             print(fig4, 'wing analysis/plots/FlapWing_LD_alpha', ...
+                '-dpdf', '-r0', '-bestfit');
+            print(fig6, 'wing analysis/plots/FlapWing_CD_CL', ...
                 '-dpdf', '-r0', '-bestfit');
         end
     end
