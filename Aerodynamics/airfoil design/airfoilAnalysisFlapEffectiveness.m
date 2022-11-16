@@ -4,7 +4,7 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 %% AILERON EFFECTIVENESS ANALYSIS. 
 % Code to get aileron effectiveness. 
-incr_alpha = 0.5;
+incr_alpha = 2;
 n_alpha = -5:incr_alpha:20;
 alpha = -5;                                      %Angle of attack.
 u_inf = 1;                                      %Freestream.
@@ -26,8 +26,8 @@ cm_dist = zeros(1, length(n_alpha));
 cm_0 = zeros(1, length(n_alpha));
 
 %% Aileron parameters. Flap approach
-def = 1;
-xhVector = linspace(0, 1, 200);
+def = 0.5;
+xhVector = linspace(0, 1, 100);
 effVector = zeros(1, length(xhVector));
 % NASASC(2)0410 zero lift angle = -2.2917
 al0Simple = 0;
@@ -38,8 +38,7 @@ for j = 1:length(xhVector)
     for i=1:length(n_alpha)
         [cl_dist(1, i), cm_dist(1, i)] = cl_cm0_NACA_alpha_function(point,...
             pan, alpha, pos, xhVector(j), def);
-        cm_0(1, i) = cl_dist(1, i)*0.25 + cm_dist(1, i);
-        if int32(alpha) == 5
+        if alpha == 5
            m = (cl_dist(1,i)-cl_dist(1,(i-1)))/(alpha-(alpha-incr_alpha));
            al0Vector(j) = -cl_dist(1,(i-1))/m + (alpha-incr_alpha);   
         end
@@ -56,7 +55,7 @@ set(groot,'defaultLegendInterpreter','latex');
 
 fig1 = figure(1);
 hold on
-title("\textbf{Elevator effectiveness vs. Hinge position}");
+title("\textbf{Elevator/Rudder effectiveness vs. Hinge position}");
 plot(1-xhVector, effVector, 'b', 'LineWidth', 1);
 xlabel("$c_a/c$ $\left[\mathrm{-}\right]$");
 ylabel("$\tau$ $\left[\mathrm{-}\right]$");
@@ -67,4 +66,4 @@ xlim([0 1]);
 ylim([0 effVector(1)]);
 hold off
 
-print(fig1, 'plots/tailEffectiveness', '-dpdf', '-r0', '-bestfit');
+print(fig1, 'plots/TailRudderEffectiveness', '-dpdf', '-r0', '-bestfit');

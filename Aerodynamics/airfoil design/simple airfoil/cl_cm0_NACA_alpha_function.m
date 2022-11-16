@@ -4,8 +4,6 @@ u_inf = 1;
 c = 1;
 
 if def ~= 0  
-    
-
     d_min = 1000;
     for i = 1:point
         if abs(pos(i,1)-xh)<d_min
@@ -29,8 +27,6 @@ if def ~= 0
     end
     
 end
-
-
 
 %% Normal vector calculus
 %Positive vector of the panel is also calculated
