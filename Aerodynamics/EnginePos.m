@@ -1,13 +1,21 @@
 %% Engine positioning
 % Script to calculate potencial engine locations
 
-heightTren = 1.5;
-desiredSpanPos = 3;
-diedral = 6;
-diamNacelle = 1.5;
+heightTren = 1.4;       % [m]
+desiredSpanPos = 3;     % [m]
+diedral = 6;            % [m]
+diamNacelle = 1.5;      % [m]
+reqDist = 0.1778;       % [m]
 
 minHeight = heightTren + desiredSpanPos*tand(diedral) - diamNacelle;
-disp(minHeight);
+
+if minHeight < reqDist
+    error('Nacelle position does not meet the requirements');
+else
+    disp(['Distance = ', num2str(minHeight), ' m']);
+    margin = minHeight - reqDist;
+    disp(['Margin = ', num2str(margin), ' m']);
+end
 
 
 
