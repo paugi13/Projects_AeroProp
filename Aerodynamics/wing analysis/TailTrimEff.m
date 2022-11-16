@@ -12,6 +12,7 @@ load('wing analysis/workspaces/TailParametersPlainTail');
 tailCLSlope = polyfit(ALPHA, CLTail, 1);
 TailEff = 0.721;    % to be changed.
 tailIncidence = input('Tail Incidence: ');
+flightReg = input('Flight regime? (Takeoff / Cruise) (1/0): ');  % results do not depend on rho and V.
 
 numSt = buildStringAD(tailIncidence);
 
@@ -30,12 +31,10 @@ DE_flap = linspace(-50, 40, AnalysisSize); % flap deflection (deg, positive:down
 ToL = 500; % tolerated error [Nm]
 FuselageAoA = linspace(-15, 20, 100);
 tailTrimAngle = zeros(1, length(FuselageAoA));
-flightReg = 1;  % results do not depend on rho and V.
 
 for i = 1:length(FuselageAoA)
     avAngle = 0;
     for j = 1:length(DE_flap)
-        
         [ResMoment, TailS, CMalpha] = PitchingEffectiveness(XcgMTOW, ...
             WingTailD,Xwing, XtailCG, flightReg, tailIncidence, ...
             tailCLSlope, VolumeCoeff, FuselageAoA(i), TailEff, DE_flap(j));
@@ -67,7 +66,8 @@ end
 
 fig1 = figure(1);
 hold on
-title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $i_{hw} = -8.58^\circ$}");
+title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $i_{hw} = " + tailIncidence ...
+    + "^\circ$}");
 plot(FuselageAoA, tailTrimAngle, 'b', 'LineWidth', 1);
 xlabel("$\alpha_{wb}$ $\left[\mathrm{^\circ}\right]$");
 ylabel("$\delta_e$ $\left[\mathrm{^\circ}\right]$");
