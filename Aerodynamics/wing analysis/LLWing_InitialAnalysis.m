@@ -83,7 +83,7 @@ disp(force_coeff(7, end));
 % Wing's CM_LE - CL. OK
 fig2 = figure(2);
 hold on
-title("\textbf{$C_{M_{LE}}$ vs. $\C_L$}");
+title("\textbf{$C_{M_{LE}}$ vs. $C_L$}");
 plot(force_coeff(7,:),CM_le, 'b');
 xlabel("$C_L$ $\left[\mathrm{-}\right]$");
 ylabel("$C_{M_{LE}}$ $\left[\mathrm{-}\right]$");

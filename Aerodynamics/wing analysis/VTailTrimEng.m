@@ -7,18 +7,17 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 load('wing analysis/workspaces/RudderParameters0');
 T = 80000;  % get exact value 
-yEng = -2.7;   % to be defined
+yEng = -2.6;   % to be defined
 
 % wing characteristics
 wingS = 65.258;
 b = 2*11.85;
 % rudder geometry
-lv = 12.7;  % distance 
+lv = 12.9;  % distance 
 XcgMTOW = 14.4408977318597;
 Xwing = 15.0317525;
-Vv = 0.14;
+Vv = 0.135;
 Sv = Vv*b*wingS/lv;
-maxDef = 25;
 eff = 0.81;
 BvBr = 0.95;
 
