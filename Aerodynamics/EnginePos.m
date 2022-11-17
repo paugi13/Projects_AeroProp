@@ -1,13 +1,14 @@
 %% Engine positioning
 % Script to calculate potencial engine locations
 
-heightTren = 1.4;       % [m]
-desiredSpanPos = 3;     % [m]
+heightTren = 1.65;       % [m]
+desiredSpanPos = 2.9;     % [m]
 diedral = 6;            % [m]
 diamNacelle = 1.5;      % [m]
 reqDist = 0.1778;       % [m]
+zWing = 0.05;
 
-minHeight = heightTren + desiredSpanPos*tand(diedral) - diamNacelle;
+minHeight = zWing + heightTren + desiredSpanPos*tand(diedral) - diamNacelle;
 
 if minHeight < reqDist
     error('Nacelle position does not meet the requirements');
