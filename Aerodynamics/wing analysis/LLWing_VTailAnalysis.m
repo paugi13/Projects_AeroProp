@@ -136,8 +136,8 @@ hold off
 rudderCLSlope = polyfit(ALPHA, force_coeff(7,:), 1);
 
 %% CP Coords
-rootChord = 2.870;
-propValue = rootChord/chord(N/2);
+VrootChord = 2.870;
+propValue = VrootChord/chord(N/2);
 wingChord = chord*propValue;
 MAC = MAC*propValue;
 
@@ -152,9 +152,9 @@ span2 = 3.870;
 propValue = span2/c4nods(2,end);
 spanCoords = c4nods(2, N/2+1:end)*propValue;
 sweepCoords = c4nods(1, N/2+1:end)*propValue;
-CPCoords = [(spanCoords(end-aux-1)+spanCoords(end-aux-2))/2, ...
+VCPCoords = [(spanCoords(end-aux-1)+spanCoords(end-aux-2))/2, ...
     (sweepCoords(end-aux-1)+sweepCoords(end-aux-2))/2+MAC/4];
-save('wing analysis/workspaces/VTailCPCoords', 'CPCoords');
+save('wing analysis/workspaces/VTailCPCoords', 'VCPCoords', 'VrootChord');
 
 saveRes = input('Save rudder parameters? Y/N (1/0): ');
 if saveRes == 1
