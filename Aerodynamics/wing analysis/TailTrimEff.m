@@ -19,7 +19,7 @@ numSt = buildStringAD(tailIncidence);
 % Geometry data
 XcgMTOW = 14.4408977318597;
 Xwing = 15.0317525;
-WingTailD = 13.65;
+WingTailD = 12.991;
 VolumeCoeff = 1.05;
 XtailCG = -((Xwing-XcgMTOW)+WingTailD);
 
