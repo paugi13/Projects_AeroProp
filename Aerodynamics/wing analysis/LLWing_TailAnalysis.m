@@ -140,7 +140,7 @@ XtailCG = -((Xwing-XcgMTOW)+WingTailD);
 
 %% CP Coords
 HrootChord = 2.870;
-propValue = rootChord/chord(N/2);
+propValue = HrootChord/chord(N/2);
 wingChord = chord*propValue;
 MAC = MAC*propValue;
 
@@ -158,7 +158,7 @@ sweepCoords = c4nods(1, N/2+1:end)*propValue;
 HCPCoords = [(spanCoords(end-aux-1)+spanCoords(end-aux-2))/2, ...
     (sweepCoords(end-aux-1)+sweepCoords(end-aux-2))/2+MAC/4];
 
-save('wing analysis/workspaces/TailCPCoords', 'HCPCoords', 'HrootChord');
+save('wing analysis/workspaces/HTailCPCoords', 'HCPCoords', 'HrootChord');
 
 % Tail data
 tailClSlope = polyfit(ALPHA, force_coeff(7, :), 1);

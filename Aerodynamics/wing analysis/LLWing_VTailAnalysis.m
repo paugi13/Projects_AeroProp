@@ -13,7 +13,7 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 AR = 2;   % aspect ratio
 TR = 0.35 ;   % taper ratio (raiz y cola)
-DE25 = 26; % sweep angle at c/4 (deg)
+DE25 = 34.78; % sweep angle at c/4 (deg)
 
 ETIP = 0; % tip twist (deg, negative for washout)
 
@@ -136,7 +136,7 @@ hold off
 rudderCLSlope = polyfit(ALPHA, force_coeff(7,:), 1);
 
 %% CP Coords
-VrootChord = 2.870;
+VrootChord = 5.520;
 propValue = VrootChord/chord(N/2);
 wingChord = chord*propValue;
 MAC = MAC*propValue;
