@@ -6,19 +6,19 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 load('wing analysis/workspaces/RudderParameters0');
 T = 78930;  % get exact value 78930 72250;
-yFusRoot = 1.374;
-yEngRoot = 2.9;   % to be defined
-yTotal = -(yFusRoot + yEngRoot);
+% yFusRoot = 1.374;
+% yEngRoot = 2.8;   % to be defined
+yTotal = -3.7534;  
 
 % wing characteristics
 wingS = 65.258;
 b = 2*11.85;
 % rudder geometry
-lv = 12.4;  % distance 
+lv = 12.2;  % distance 
 XcgMTOW = 14.4408977318597;
 Xwing = 15.0317525;
 Vv = 0.11;
-Sv = Vv*b*wingS/lv;
+tailS = Vv*b*wingS/lv;
 eff = 0.81;
 BvBr = 1;
 
@@ -40,6 +40,8 @@ for i = 1:length(TVector)
     TrimAngle(i) = -TMoment/(CnCoeff*wingS*b*q);
 end
 
+disp(['Tail Area = ', num2str(tailS)]);
+
 %% POSTPROCESS
 
 set(groot,'defaultAxesTickLabelInterpreter','latex');  
@@ -50,11 +52,15 @@ set(groot,'defaultLegendInterpreter','latex');
 
 fig1 = figure(1);
 hold on
-title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $y_e/b = " + yEngRoot/(b/2) + "$}");
-plot(TVector*1000, TrimAngle, 'b', 'LineWidth', 1);
-xlabel("$T$ $\left[\mathrm{kN}\right]$");
+title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $y_{CG}= " + yTotal + "~m$}");
+plot(TVector, TrimAngle, 'b', 'LineWidth', 1);
+xlabel("$T$ $\left[\mathrm{N}\right]$");
 ylabel("$\delta_r$ $\left[\mathrm{^\circ}\right]$");
 grid on;
 grid minor;
 box on;
+xlim([0 T]);
 hold off
+
+print(fig1, 'wing analysis/plots/VTailTrim', '-dpdf', '-r0',...
+    '-bestfit');
