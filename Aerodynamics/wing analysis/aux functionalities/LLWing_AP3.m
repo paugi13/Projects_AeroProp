@@ -105,7 +105,7 @@ Cd0=Cf*(1+60/((lh/b)^3)+0.0025*(lh/b))*(Ss/SB);
 Cd01=Cf*(1+60/((lh/b)^3)+0.0025*(lh/b))*(Ss./S_bal);
 
 %momento de cabeceo en función de alfa
-Mf=2*k*q*Vf*ALPHA*pi/180;
+Mf=2*k*q*V2f*ALPHA*pi/180;
 C_mf=Mf/(q*Vf);
 C_mf2 = (pi*k*q*2*0.09*ALPHA*pi/180*4/3)/(q*Vf);
 figure
