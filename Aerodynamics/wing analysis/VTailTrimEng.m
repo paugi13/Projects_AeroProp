@@ -22,7 +22,7 @@ tailS = Vv*b*wingS/lv;
 eff = 0.81;
 BvBr = 1;
 
-% flight profile: 80% of stall speed
+% flight profile: 1.13% of stall speed
 v = 196.777/3.6*1.13;   % § 25.1513	Minimum control speed.
 rho = 1.225;
 q = 0.5*rho*v^2;

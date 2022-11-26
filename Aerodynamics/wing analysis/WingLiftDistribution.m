@@ -13,6 +13,7 @@ numSt = buildStringAD(wantedAoA);
 %% Input data
 % cruise regime: MTOW?
 MTOW = 39850*9.81;
+wingS = 65.258;
 
 %% Calculations
 if flightReg == 1   %takeoff
@@ -42,16 +43,19 @@ for i = 1:length(polinomialFit)
 end
 startCoord = spanCoords(1);
 endCoord = spanCoords(end);
-TotalLift = 2*q*integral(dist, startCoord, endCoord);
+TotalLiftInt = 2*q*integral(dist, startCoord, endCoord);
+TotalLiftCL = q*wingS*wingCL;
 
 if flightReg == 1
     disp(['TOW =  ', num2str(TOW)]);
     disp(['Incidence angle = ', num2str(wantedAoA)]);
-    disp(['Provided Lift = ', num2str(TotalLift)]);
+    disp(['Provided Lift (integral) = ', num2str(TotalLiftInt)]);
+    disp(['Provided Lift  (CL) = ', num2str(TotalLiftCL)]);
 else
     disp(['Cruise weight =  ', num2str(cruiseWeight)]);
     disp(['Incidence angle = ', num2str(wantedAoA)]);
-    disp(['Provided Lift = ', num2str(TotalLift)]);
+    disp(['Provided Lift (integral) = ', num2str(TotalLiftInt)]);
+    disp(['Provided Lift  (CL) = ', num2str(TotalLiftCL)]);
 end
 
 %% Plot lift distribution

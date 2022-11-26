@@ -19,7 +19,7 @@ if flightReg == 1   %takeoff (flap)
     q = 0.5*rho*TOSpeed^2;
 else    %cruise (no flap)
     ClSlope = [0.0795 0.0816];      % alpha functions
-    Cmac = -0.059817260761975;
+    Cmac = -0.062685;                  %0.059817260761975; ;
     cruiseSpeed = 857/3.6;
     rho = 0.363918;
     q = 0.5*rho*cruiseSpeed^2;

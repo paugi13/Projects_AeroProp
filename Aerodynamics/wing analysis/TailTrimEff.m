@@ -17,7 +17,7 @@ flightReg = input('Flight regime? (Takeoff / Cruise) (1/0): ');  % results do no
 numSt = buildStringAD(tailIncidence);
 
 % Geometry data
-XcgMTOW = 13.8263;  % XcgOEW = 14.2753
+XcgMTOW = 13.8263;  % XcgOEW = 14.2753   XcgMTOW = 13.8263
 Xwing = 14.4236;
 WingTailD = 12.991;
 VolumeCoeff = 1.05;
@@ -75,5 +75,5 @@ grid on;
 grid minor;
 box on;
 hold off
-
+% 2.12, 8.48 
 print(fig1, directSave, '-dpdf', '-r0', '-bestfit');
