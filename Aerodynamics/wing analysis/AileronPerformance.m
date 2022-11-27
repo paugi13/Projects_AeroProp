@@ -18,7 +18,8 @@ MFuselage = 26488.295;
 R = 1.589;
 b = 11.85*2;
 Cr = 4.08;
-tAverage = Cr*0.14*0.5;
+rootThick = 0.14;
+tAverage = Cr*rootThick*0.5;
 Ixx = MFuselage*R^2 + 1/12*MWing*(b^2 + tAverage^2);
 
 % Wing characteristics
@@ -26,13 +27,13 @@ wingS = 65.258;
 lambda = 0.35;
 chordF = @(y) Cr*(1 + 2*(lambda - 1)/b*y); 
 Ct = chordF(b/2);
-upAngle = 30;
-downAngle = 25;
+upAngle = 20; 
+downAngle = 20; 
 meanAngle = (abs(upAngle) + abs(downAngle))/2;
 
 % Aileron characteristics
-xh = 0.3;
-eff = 0.6566;
+xh = 0.7;
+eff = 0.6566; %0.6566;
 innerEdge = 0.7;
 outerEdge = 0.95;
 
@@ -44,7 +45,7 @@ q = 0.5*rho*turnSpeed^2;
 %% Rolling moment integration 
 yi = innerEdge*b/2;
 yo = outerEdge*b/2;
-chordFInt = @(y) y^2/2 + 2/3*(lambda - 1)/b*y^3;
+chordFInt = @(y) Cr*(y^2/2 + 2/3*(lambda - 1)/b*y^3);
 intResult = chordFInt(yo) - chordFInt(yi);
 
 %% Aileron lift sections

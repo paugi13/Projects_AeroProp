@@ -11,7 +11,7 @@ u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
 %% Define new camber line for supercrital airfoils
-coord = table2array(readtable('NASASC(2)0012.csv'));
+coord = table2array(readtable('NASASC(2)0410.csv'));
 point = size(coord,1)/2;
 pan = point-1;
 pos = zeros(point, 2);
@@ -26,7 +26,7 @@ cm_dist = zeros(1, length(n_alpha));
 cm_0 = zeros(1, length(n_alpha));
 
 %% Aileron parameters. Flap approach
-def = 0.5;
+def = 1;
 xhVector = linspace(0, 1, 100);
 effVector = zeros(1, length(xhVector));
 % NASASC(2)0410 zero lift angle = -2.2917
@@ -66,4 +66,4 @@ xlim([0 1]);
 ylim([0 effVector(1)]);
 hold off
 
-print(fig1, 'plots/TailRudderEffectiveness', '-dpdf', '-r0', '-bestfit');
+% print(fig1, 'plots/TailRudderEffectiveness', '-dpdf', '-r0', '-bestfit');

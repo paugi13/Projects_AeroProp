@@ -45,7 +45,7 @@ set(groot,'defaultLegendInterpreter','latex');
 
 fig1 = figure(1);
 hold on
-title("\textbf{NASASC(2)-0012}");
+title("\textbf{NASASC(2)-0414}");
 plot(pos(:,1), pos(:,2), 'r');
 plot(coord(1:point, 1), coord(1:point, 2), 'b');
 plot(coord(point+1:point*2, 1), coord(point+1:point*2, 2), 'b');
