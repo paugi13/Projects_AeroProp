@@ -1,4 +1,4 @@
-function [ResMoment, TailS, CMalpha] = PitchingEffectiveness(XcgMTOW, ...
+function [M1, M2, M3, ResMoment, TailS, CMalpha, eps] = PitchingEffectiveness(XcgMTOW, ...
     WingTailD,Xwing, XtailCG, flightReg, tailIncidence, tailClSlope, ...
     VolumeCoeff, FuselageAoA, TailEff, DE_Flap)
 % Function to calculate resultant pitching moment taking geometry and tail
@@ -31,9 +31,9 @@ wingLift = q*WingS*wingCL;  %*(XcgMTOW-Xwing);
 wingMoment = q*WingS*Cmac*MAC;
 
 % Wing downwash
-eps0 = 2*wingCL/(pi*AR);
-epsAlphaSlope = 2*ClSlope(1)/(pi*AR);
-eps = eps0 + epsAlphaSlope*FuselageAoA;
+eps0 = 2*ClSlope(2)/(pi*AR);
+epsAlphaSlope = 2*ClSlope(1)*180/pi/(pi*AR);
+eps = (eps0 + epsAlphaSlope*((FuselageAoA + WingIncidence)*pi/180))*180/pi;
 
 tailCL = tailClSlope(1)*(tailIncidence + FuselageAoA - eps + ...
     TailEff*DE_Flap) + tailClSlope(2);
@@ -43,9 +43,14 @@ M2 = wingMoment;
 M3 = tailLift*XtailCG;
 
 % Pitching moment slope: < 0 means stable conf.
-CMalpha = ClSlope(1)*(XcgMTOW-Xwing) + tailClSlope(1)*(TailS/WingS)*XtailCG*(1-...
-    epsAlphaSlope);
+% CMalpha = ClSlope(1)*(XcgMTOW-Xwing) + tailClSlope(1)*(TailS/WingS)*XtailCG*(1-...
+%     epsAlphaSlope);
+CMalpha = ClSlope(1)*(XcgMTOW-Xwing) - tailClSlope(1)*(1-epsAlphaSlope)*...
+    VolumeCoeff*0.95;
 
+% T1 = ClSlope(1)*(XcgMTOW-Xwing);
+% T2 = tailClSlope(1)*(TailS/WingS)*XtailCG*(1-...
+%     epsAlphaSlope)/MAC;
 % Resultant moment
 ResMoment = M1 + M2 + M3;
 end

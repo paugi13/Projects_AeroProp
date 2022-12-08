@@ -8,18 +8,18 @@ load('wing analysis/workspaces/RudderParameters0');
 T = 78930;  % get exact value 78930 72250;
 % yFusRoot = 1.374;
 % yEngRoot = 2.8;   % to be defined
-yTotal = -3.7534;  
+yTotal = -3.7534;   % FROM Carlos S code.   
 
 % wing characteristics
 wingS = 65.258;
 b = 2*11.85;
 % rudder geometry
-lv = 12.2;  % distance 
+lv = 14.2;  % distance    12.2;
 XcgMTOW = 14.4408977318597;
 Xwing = 15.0317525;
-Vv = 0.11;
+Vv = 0.128;          % 0.11
 tailS = Vv*b*wingS/lv;
-eff = 0.81;
+eff = 0.71;
 BvBr = 1;
 
 % flight profile: 1.13% of stall speed
@@ -52,7 +52,7 @@ set(groot,'defaultLegendInterpreter','latex');
 
 fig1 = figure(1);
 hold on
-title("\textbf{$\delta_e$ vs $\alpha_{wb}$ $y_{CG}= " + yTotal + "~m$}");
+title("\textbf{$\delta_r$ vs $\alpha_{wb}$ $y_{CG}= " + yTotal + "~m$}");
 plot(TVector, TrimAngle, 'b', 'LineWidth', 1);
 xlabel("$T$ $\left[\mathrm{N}\right]$");
 ylabel("$\delta_r$ $\left[\mathrm{^\circ}\right]$");
@@ -62,5 +62,5 @@ box on;
 xlim([0 T]);
 hold off
 
-print(fig1, 'wing analysis/plots/VTailTrim', '-dpdf', '-r0',...
-    '-bestfit');
+% print(fig1, 'wing analysis/plots/VTailTrim', '-dpdf', '-r0',...
+%     '-bestfit');

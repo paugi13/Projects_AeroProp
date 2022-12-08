@@ -10,10 +10,18 @@ load('wing analysis/workspaces/WingCPCoords');
 load('wing analysis/workspaces/HTailCPCoords');
 load('wing analysis/workspaces/VTailCPCoords');
 
+rootChord = 4.08;
 % CP distances to wing's CP.
-lh = 12.991;
-lv = 12.2;
+lh = 15.01;
+lv = 14.2;
 
+FrontCAWing = 13.9085;
 %% Calculations for distances with respect to the wing's leading edge.
-WingHor = lh - HCPCoords(2) + CPCoords(2);
-WingVer = lv - VCPCoords(2) + CPCoords(2);
+WingHorTE = lh - HCPCoords(2) + CPCoords(2) - rootChord;
+WingVerTE = lv - VCPCoords(2) + CPCoords(2) - rootChord;
+
+WingHorLE = lh - HCPCoords(2) + CPCoords(2);
+WingVerLE = lv - VCPCoords(2) + CPCoords(2);
+
+HTailEndCoord = FrontCAWing + lh + (HrootChord - HCPCoords(2));
+VTailEndCoord = FrontCAWing + lv + (VrootChord - VCPCoords(2));

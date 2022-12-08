@@ -148,12 +148,12 @@ for i = 1:size(wingChord, 1)
     end
 end
 
-span2 = 3.870;
+span2 = 3.750;
 propValue = span2/c4nods(2,end);
 spanCoords = c4nods(2, N/2+1:end)*propValue;
 sweepCoords = c4nods(1, N/2+1:end)*propValue;
-VCPCoords = [(spanCoords(end-aux-1)+spanCoords(end-aux-2))/2, ...
-    (sweepCoords(end-aux-1)+sweepCoords(end-aux-2))/2+MAC/4];
+VCPCoords = [(spanCoords(end-aux+1)+spanCoords(end-aux+2))/2, ...
+    (sweepCoords(aux)+sweepCoords(aux-1))/2];
 save('wing analysis/workspaces/VTailCPCoords', 'VCPCoords', 'VrootChord');
 
 saveRes = input('Save rudder parameters? Y/N (1/0): ');

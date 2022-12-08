@@ -111,7 +111,7 @@ grid minor
 legend('Calculated stall point', 'Data stall point' ,'location', 'northwest');
 hold off
 
-figure
+fig3 = figure(3);
 hold on
 title("\textbf{$C_{m_0}$ vs $\alpha$}");
 plot(n_alpha, cm_0(1,:), 'b' , 'LineWidth', 1);
@@ -122,5 +122,6 @@ grid minor
 axis equal
 hold off
 
-print(fig1, 'airfoil design/plots/NASASC(2)-0414FLAP', '-dpdf', '-r0', '-bestfit');
-print(fig2, 'airfoil design/plots/SC(2)-0414FLAP_Cl_alpha', '-dpdf', '-r0', '-bestfit');
+% print(fig1, 'airfoil design/plots/NASASC(2)-0414FLAP', '-dpdf', '-r0', '-bestfit');
+% print(fig2, 'airfoil design/plots/SC(2)-0414FLAP_Cl_alpha', '-dpdf', '-r0', '-bestfit');
+% print(fig2, 'airfoil design/plots/SC(2)-0414FLAP_Cm_alpha', '-dpdf', '-r0', '-bestfit');

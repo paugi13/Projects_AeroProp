@@ -10,7 +10,7 @@ u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
 %% Define new camber line for supercrital airfoils
-coord = table2array(readtable('NASASC(2)0414.csv'));
+coord = table2array(readtable('NASASC(2)0410.csv'));
 point = size(coord,1)/2;
 pan = point-1;
 pos = zeros(point, 2);
@@ -88,5 +88,6 @@ grid minor
 axis equal
 hold off
 
-print(fig1, 'plots/NASASC(2)-0414', '-dpdf', '-r0', '-bestfit');
-print(fig2, 'plots/SC(2)-0414_Cl_alpha', '-dpdf', '-r0', '-bestfit');
+print(fig1, 'plots/NASASC(2)-0410', '-dpdf', '-r0', '-bestfit');
+print(fig2, 'plots/SC(2)-0410_Cl_alpha', '-dpdf', '-r0', '-bestfit');
+print(fig3, 'plots/SC(2)-0410_Cm_alpha', '-dpdf', '-r0', '-bestfit');

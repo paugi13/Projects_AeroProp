@@ -170,8 +170,8 @@ Cl_Values = cl_local(N/2+1:end, aux2).*wingChord(N/2+1:end);
 polinomialFit = polyfit(spanCoords, Cl_Values', 5);
 
 sweepCoords = c4nods(1, 1:end)*propValue;
-CPCoords = [(spanCoords(end-aux-1)+spanCoords(end-aux-2))/2, ...
-    (sweepCoords(aux)+sweepCoords(aux-1))/2+MAC/4];
+CPCoords = [(spanCoords(end-aux+1)+spanCoords(end-aux+2))/2, ...
+    (sweepCoords(aux)+sweepCoords(aux-1))/2];
 
 save('wing analysis/workspaces/WingCPCoords', 'CPCoords', 'rootChord');
 
