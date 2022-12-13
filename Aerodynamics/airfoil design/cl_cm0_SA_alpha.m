@@ -10,7 +10,7 @@ u_inf = 1;                                      %Freestream.
 dens = 1;                                       %Density.
 
 %% Define new camber line for supercrital airfoils
-coord = table2array(readtable('NASASC(2)0410.csv'));
+coord = table2array(readtable('supercriticalTip.csv'));%NASASC(2)0410
 point = size(coord,1)/2;
 pan = point-1;
 pos = zeros(point, 2);
